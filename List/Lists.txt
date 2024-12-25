@@ -1,0 +1,5 @@
+List in C# 
+
+--Resized Dynamically but array can resize 
+--it Allows Duplicate 
+-- based index access element 
