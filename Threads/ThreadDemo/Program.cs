@@ -1,23 +1,45 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 namespace ThreadDemo
 {
     public class Program
     {
         public static void Main()
         {
-            Thread thread = new Thread(new ThreadStart(PrintNumbers));
-            thread.Start();
-            var state =  thread.ThreadState;
-            Console.WriteLine(state);
+            Console.WriteLine("Main Method Started......");
+
+
+            //but  task will use  all core efficeinetly Tpl will manage multiple core 
+            Parallel.For(0, 1000000, x => RunMillionIterations());
+
+
+
+            //this will not use all cores efficiently 
+
+            //Thread thread = new Thread(RunMillionIterations);
+            //thread.Start();
+
+            Console.Read();
+
+
+
+
 
         }
 
-        public static void PrintNumbers()
-        {
-            for (int i = 0; i < 10; i++)
+        public static void RunMillionIterations() {
+
+            string x = "";
+
+            for (int i = 0; i < 1000000; i++)
             {
-                Console.Write(i+" ");
+                Console.WriteLine(x + "s");
             }
         }
-    }
+        }
+       
+
+
+    
+
 }
