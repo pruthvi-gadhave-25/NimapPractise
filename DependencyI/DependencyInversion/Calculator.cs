@@ -7,6 +7,9 @@ namespace DependencyInversion
 
         public ICalculatorOperation CalculatorOperation { get; }
 
+
+        //here  we are using dependency Injction using Constructor 
+        //injceting ICalculatorOperation reference 
         public Calculator(ICalculatorOperation calculatorOperation)
         {
             CalculatorOperation = calculatorOperation;
