@@ -16,7 +16,7 @@ namespace LoadingObjects
                                                    
             }
 
-            //Lazy 
+            //Lazy     
             using(var context2 = new SchoolContext())
             {
 
