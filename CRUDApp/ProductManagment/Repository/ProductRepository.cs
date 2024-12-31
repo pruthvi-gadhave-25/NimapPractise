@@ -18,8 +18,16 @@ namespace ProductManagment.Repository
         {
             try
             {
-                //var prod = await _context.Products.AddAsync(product);
-                //await _context.SaveChangesAsync();
+                var category = await _context.Categories.FindAsync(product.CategoryId);
+
+                if(category == null)
+                {
+                    return false;
+                }
+                product.Category = category;
+
+                await _context.Products.AddAsync(product);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -54,7 +62,7 @@ namespace ProductManagment.Repository
         {
             try
             {
-                var products =  await _context.Products.Include(c => c.Category.CategoryName).ToListAsync();
+                var products =  await _context.Products.Include(c => c.Category).ToListAsync();
                 return products;
             }catch(Exception ex)
             {
