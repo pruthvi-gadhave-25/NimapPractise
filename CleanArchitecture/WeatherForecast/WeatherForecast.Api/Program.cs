@@ -11,8 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
-builder.Services.AddScoped<IWeatherForecastRepository, WatherForecastRepository>();
+builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>(); ///added scoped 
+builder.Services.AddScoped<IWeatherForecastRepository, WatherForecastRepository>(); //added scoped 
 
 var app = builder.Build();
 
