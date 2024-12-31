@@ -1,67 +1,115 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductManagment.Models;
 using ProductManagment.Data;
+using ProductManagment.Services.Interface;
 
 namespace ProductManagment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
-    {
-        private readonly AppDbContext _appDbContext1;
-        public ProductController(AppDbContext appDbContext)
+    public class ProductController : ControllerBase    {
+        //private readonly AppDbContext _appDbContext1;
+            
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-            _appDbContext1 = appDbContext;
-        }
-        [HttpGet]
-        public IActionResult GetAllProducts()
-        {
-            var allEmp = _appDbContext1.Products.ToList();
-            return Ok(allEmp);
+            _productService  = productService;
         }
 
-
         [HttpGet]
-        [Route("{id:Guid}")]
-        public IActionResult GetAllProducts(Guid id)
+        public async Task<IActionResult> GetAllProducts()
         {
-            var product = _appDbContext1.Products.Find(id);
-        
-            return Ok(product);
+                try
+                {
+
+                    if(_productService ==null)
+                    {
+                        return StatusCode(500,"Prodcut Sevcei Not Initialized");
+                    }
+                    var products = await _productService.GetAllProducts();
+
+                    if (products == null)
+                    {
+                        return NotFound("Not Products Found");
+                    }
+                    return Ok(products);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return BadRequest("Not Products Found");
+                }
         }
+
         [HttpPost]
-        public IActionResult AddProduct(Product  product )
+        public async Task<IActionResult> AddProduct(Product product)
         {
-           var res = _appDbContext1.Products.Add(product);
-            _appDbContext1.SaveChanges();
-            return Ok(res);
-        }
-        [HttpPut]
-        [Route("{id:Guid}")]
-
-        public IActionResult UpdateProduct(Guid id ,Product product)
-        {
-            var updatedProduct = _appDbContext1.Products.Find(id);
-            _appDbContext1.SaveChanges();
-            return Ok(updatedProduct);
-           
-        }
-        [HttpDelete]
-        [Route("{id:Guid}")]
-        public IActionResult DeleteProduct(Guid id)
-        {
-            var product = _appDbContext1.Products.Find(id);
-            if (product != null) {
-                _appDbContext1.Products.Remove(product);
-                _appDbContext1.SaveChanges();
-            }
-            else
+            if (product == null)
             {
-                Console.WriteLine("Prduct Not Found");
+                return BadRequest("Invalid product data.");
             }
-           
-            return Ok(product);
+
+            var result = await _productService.AddProduct(product);
+            if (result)
+            {
+                return Ok("Product added successfully.");
+            }
+            return StatusCode(500, "An error occurred while adding the product.");
+
 
         }
+         
+        
+        [HttpPut("{id}")]
+            public async Task<IActionResult> UpdateProduct(Guid id,  Product product)
+            {
+                try
+                {                  
+                    var result = await _productService.UpdateProduct(product);
+                    if (result)
+                    {
+                        return Ok("Product updated successfully.");
+                    }
+                return BadRequest("Not Updated");
+               
+            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine( ex.Message);
+                    return StatusCode(500, "Error occurrs while updating the product");
+                }
+            }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(Guid id)
+        {
+            try
+            {
+                var result = await _productService.DeleteProduct(id);
+                if (result)
+                {
+                    return Ok("Product deleted successfully.");
+                }
+                return StatusCode(500, "An error occurred while deleting the product.");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine( ex.Message);
+                return BadRequest("Product Not Deleted");
+            }
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetProductById(Guid id)
+        {
+
+            var product = await _productService.GetProduct(id);
+
+
+            return Ok(product);
+        }
+       
     }
 }
