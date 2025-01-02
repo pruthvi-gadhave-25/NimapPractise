@@ -34,6 +34,9 @@ namespace ProductManagment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
@@ -51,6 +54,9 @@ namespace ProductManagment.Migrations
                     b.Property<string>("ProdcutName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

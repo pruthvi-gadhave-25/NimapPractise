@@ -81,5 +81,18 @@ namespace ProductManagment.Repository
                 return false;
             }
         }
+
+        public async Task SaveAsync()
+        {
+            _context.SaveChangesAsync();
+
+           
+        }
+
+      public async Task<List<Product>> GetProductsByCategory(int categoryId){
+
+            var products = await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+            return products;
+        }
     }
 }

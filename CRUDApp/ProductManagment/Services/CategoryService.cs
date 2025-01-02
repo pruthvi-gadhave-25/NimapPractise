@@ -39,5 +39,22 @@ namespace ProductManagment.Services
         {
             return _categoryRepository.UpdateCategory(category);
         }
+
+        public async  Task DeactivateCategory(int categoryId)
+        {
+            var category = await  _categoryRepository.GetCategory(categoryId);
+
+            category.IsActive = false;
+
+            var products = await _categoryRepository.GetProductsByCategory(categoryId);
+
+            foreach( var product in products)
+            {
+                product.isActive = false;    
+            }
+
+            await _categoryRepository.SaveAsync();
+
+        }
     }
 }

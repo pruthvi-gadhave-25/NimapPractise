@@ -10,5 +10,8 @@ namespace ProductManagment.Repository.Interface
         public Task<bool> AddCategory(Category category);
         public Task<bool> UpdateCategory(Category category);
         public Task<bool> DeleteCategory(int id);
+
+        public Task SaveAsync();
+        Task<List<Product>> GetProductsByCategory(int categoryId);
     }
 }
