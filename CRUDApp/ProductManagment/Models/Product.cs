@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace ProductManagment.Models
+﻿namespace ProductManagment.Models
 {
     public class Product
     {
