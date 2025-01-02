@@ -110,6 +110,13 @@ namespace ProductManagment.Controllers
 
             return Ok(product);
         }
-       
+
+
+        [HttpGet("paginated")]
+        public async Task<List<Product>>GetPaginatedProducts(int currentPage, int allPages)
+        {
+            return await _productService.GetPaginatedProducts(currentPage, allPages);    
+        }
+
     }
 }

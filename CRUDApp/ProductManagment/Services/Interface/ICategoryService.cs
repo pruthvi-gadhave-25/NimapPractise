@@ -10,6 +10,8 @@ namespace ProductManagment.Services.Interface
         Task<Category> GetCategory(int id);
         Task<List<Category>> GetAllCategories();
         Task DeactivateCategory(int categoryId);
+        Task ActivateCategory(int categoryId);
+      
        
     }
 }
