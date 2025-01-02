@@ -40,5 +40,9 @@ namespace ProductManagment.Services
         {
             return _productRepository.UpdateProduct(product);
         }
+        public async Task<List<Product>> GetPaginatedProducts(int page, int pageNumber)
+        {
+           return   await  _productRepository.GetProductListByPagination(page, pageNumber);
+        }
     }
 }

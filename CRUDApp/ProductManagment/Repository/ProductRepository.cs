@@ -98,5 +98,12 @@ namespace ProductManagment.Repository
                 return false;
             }
         }
+
+        public async Task<List<Product>> GetProductListByPagination(int page, int pageSize)
+        {
+            var products = await _context.Products.Include(c => c.Category).Skip((page-1) * pageSize).Take(pageSize).ToListAsync() ;
+
+            return products;
+        }
     }
 }

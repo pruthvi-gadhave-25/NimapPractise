@@ -9,5 +9,6 @@ namespace ProductManagment.Services.Interface
         public Task<bool> DeleteProduct(Guid id);
         public Task<Product> GetProduct(Guid id);
         public Task<List<Product>> GetAllProducts();
+        public Task<List<Product>> GetPaginatedProducts(int page,int pageNumber); 
     }
 }

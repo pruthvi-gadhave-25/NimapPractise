@@ -13,5 +13,6 @@ namespace ProductManagment.Repository.Interface
 
         public Task SaveAsync();
         Task<List<Product>> GetProductsByCategory(int categoryId);
+        
     }
 }

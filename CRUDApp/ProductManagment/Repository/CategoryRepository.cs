@@ -93,6 +93,8 @@ namespace ProductManagment.Repository
 
             var products = await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
             return products;
-        }
+       }
+
+        
     }
 }

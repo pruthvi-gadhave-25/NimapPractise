@@ -10,5 +10,6 @@ namespace ProductManagment.Repository.Interface
         public Task<bool> AddProduct(Product product);
         public Task<bool> UpdateProduct(Product product);
         public Task<bool> DeleteProduct(Guid id);
+        Task<List<Product>> GetProductListByPagination(int pageNumber, int totalSize);
     }
 }

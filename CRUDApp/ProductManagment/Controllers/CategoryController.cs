@@ -86,8 +86,16 @@ namespace ProductManagment.Controllers
 
             return Ok("Deactivated Succesfully");
         }
-      
 
-        
+
+        [HttpPost("/activateCategory/{categoryId}")]
+        public async Task<IActionResult> ActivateCategory(int categoryId)
+        {
+            await _categoryService.ActivateCategory(categoryId);
+
+            return Ok("Activated Succesfully");
+        }
+
+
     }
 }

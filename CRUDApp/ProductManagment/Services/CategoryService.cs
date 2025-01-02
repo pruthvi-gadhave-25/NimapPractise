@@ -56,5 +56,21 @@ namespace ProductManagment.Services
             await _categoryRepository.SaveAsync();
 
         }
+
+        public async Task ActivateCategory(int categoryId)
+        {
+            var category = await _categoryRepository.GetCategory(categoryId);
+
+            category.IsActive = true;
+
+            var products = await _categoryRepository.GetProductsByCategory(categoryId);
+
+            foreach (var product in products)
+            {
+                product.isActive = true;
+            }
+
+            await _categoryRepository.SaveAsync();
+        }
     }
 }
