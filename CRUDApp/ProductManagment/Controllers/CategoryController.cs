@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductManagment.Models;
-using ProductManagment.Services;
 using ProductManagment.Services.Interface;
 
 namespace ProductManagment.Controllers
@@ -81,6 +79,13 @@ namespace ProductManagment.Controllers
             return StatusCode(500, "An error occurred while deleting the category.");
         }
 
+        [HttpPost("deactivate/{categoryId}")]
+        public async Task<IActionResult> DeacivateCategory(int categoryId)
+        {
+            await _categoryService.DeactivateCategory(categoryId);
+
+            return Ok("Deactivated Succesfully");
+        }
       
 
         

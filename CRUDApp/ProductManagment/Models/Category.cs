@@ -5,7 +5,7 @@
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        public isActive  {get ;set ;} =true 
+        public bool IsActive { get; set; } = true;
 
     }
 }

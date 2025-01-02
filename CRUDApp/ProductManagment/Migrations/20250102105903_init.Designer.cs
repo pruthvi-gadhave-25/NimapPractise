@@ -12,8 +12,8 @@ using ProductManagment.Data;
 namespace ProductManagment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241230122424_InitialDb")]
-    partial class InitialDb
+    [Migration("20250102105903_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,9 @@ namespace ProductManagment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
@@ -54,6 +57,9 @@ namespace ProductManagment.Migrations
                     b.Property<string>("ProdcutName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

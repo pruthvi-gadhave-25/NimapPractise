@@ -9,5 +9,7 @@ namespace ProductManagment.Services.Interface
         Task<bool> DeleteCategory(int id);
         Task<Category> GetCategory(int id);
         Task<List<Category>> GetAllCategories();
+        Task DeactivateCategory(int categoryId);
+       
     }
 }
