@@ -41,7 +41,7 @@ namespace ProductManagment.Repository
         {
             try
             {
-                var product = await _context.Products.FirstOrDefaultAsync(prod => prod.Id == id);
+                var product = await _context.Products.FirstOrDefaultAsync(prod => prod.ProductId == id);
 
                 if (product == null)
                 {
@@ -75,7 +75,7 @@ namespace ProductManagment.Repository
         {
             try
             {
-                var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+                var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
                 return product;
             }catch(Exception ex)
             {
