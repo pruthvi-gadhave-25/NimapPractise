@@ -36,5 +36,36 @@ namespace LogicalDemo
 
           
         }
+
+        public static void FibonaciNoRecursion(int num)
+        {
+
+            //Input: N = 10
+            //Output: 0 1 1 2 3 5 8 13 21 34
+            int n1 = 0;
+            int n2 = 1;
+            int sum = 0; 
+
+            for(int i = 0 ;i<= num; i++)
+            {
+                Console.Write(n1 + " , ");
+
+                int n3 = n1 + n2;
+                n1 = n2;
+                n2 = n3;
+               
+            }
+            
+        }
+
+        public static int FibbonaciUsingRecursion(int n )
+        {
+            if (n <= 1)
+            {
+                return n;
+            }
+
+            return FibbonaciUsingRecursion(n - 1)+ FibbonaciUsingRecursion(n-2);
+        }
     }
 }
