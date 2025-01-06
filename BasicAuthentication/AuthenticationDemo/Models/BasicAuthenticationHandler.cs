@@ -18,13 +18,13 @@ namespace AuthenticationDemo.Models
             IOptionsMonitor<AuthenticationSchemeOptions> options, // Options for configuring authentication schemes
             ILoggerFactory logger, // Factory to create logger objects
             UrlEncoder encoder, // Encoder for URL to ensure safe URLs
-            IUserRepository userRepository) // User repository to handle user data
+            IUserRepository userRepository) 
             : base(
                   options,
                   logger,
-                  encoder) // Pass options, logger, and encoder to the base class
+                  encoder) 
         {
-            _userRepository = userRepository; // Initialize user repository with dependency injection
+            _userRepository = userRepository; 
         }
 
 
@@ -38,6 +38,7 @@ namespace AuthenticationDemo.Models
             }
 
             User? user;
+
             try
             {
                 // Parse the Authorization header and validate its format

@@ -2,7 +2,8 @@ using AuthenticationDemo.Models;
 using AuthenticationDemo.Repository;
 using Microsoft.AspNetCore.Authentication;
 
-//Basic authentication is only secure over HTTPS.
+//Basic authentication is only secure over HTTPS. it get call per http request 
+//every request increases the size of the request headers
 
 var builder = WebApplication.CreateBuilder(args);
 

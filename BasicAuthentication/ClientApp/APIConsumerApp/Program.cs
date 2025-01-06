@@ -18,13 +18,10 @@ using System.Net.Http.Headers;
             ///Basic Authentication here ---------------------------------
             ///
 
-            var byteArray = Encoding.ASCII.GetBytes("Pranaya:Test@1234");//// Encoding the username and password as ASCII.
+            var byteArray = Encoding.ASCII.GetBytes("Pranaya:Test@1");//// Encoding the username and password as ASCII.
 
             client.DefaultRequestHeaders.Authorization = new
                 AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray)) ;
-
-
-
 
 
 
@@ -41,10 +38,7 @@ using System.Net.Http.Headers;
                 // Output any exceptions to the console.
                 Console.WriteLine(e.Message);
             }
-
-
-          
-    
+             
 
            async Task<string>GetAsync(string path )
         {
