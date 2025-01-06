@@ -12,11 +12,20 @@ namespace LogicalDemo
 
             //LogicalProblem.RevString("Nimap");
 
-            LogicalProblem.FibonaciNoRecursion(15);
+
+            //------------Fibbonaci -------------------
+            LogicalProblems.FibonaciNoRecursion(15);
             //for (int i = 0; i < 15; i++) {
             //    LogicalProblem.FibbonaciUsingRecursion(15);
             //}
-            Console.WriteLine(LogicalProblem.FibbonaciUsingRecursion(12));
+            Console.WriteLine(LogicalProblems.FibbonaciUsingRecursion(12));
+
+            //------------Fibbonaci -------------------
+
+
+            //------------2nd largest Array without sorting  -------------------
+            LogicalProblems.SecondLargest();
+            //------------2nd largest Array without sorting  -------------------
         }
     }
 }

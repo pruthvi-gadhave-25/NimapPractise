@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LogicalDemo
 {
-    public class LogicalProblem
+    public class LogicalProblems
     {
         //2. WAP to reverse an integer without converting it to a string, without using any built-in methods. 
 
@@ -66,6 +66,29 @@ namespace LogicalDemo
             }
 
             return FibbonaciUsingRecursion(n - 1)+ FibbonaciUsingRecursion(n-2);
+        }
+
+        public static void SecondLargest()
+        {
+            //[12, 35, 1, 10, 34, 1]
+            int[] arr = { 12, 35, 1, 10, 34, 1 }; // o/p =34 
+
+            int max = -1;
+            int secondMax = -1;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] > max)
+                {                   
+                        secondMax = max;
+                        max = arr[i];                                      
+                }
+                if (arr[i] < max && arr[i ] > secondMax)
+                {
+                    secondMax = arr[i];
+                }
+            }
+
+            Console.WriteLine( $"max is {max} ans secondMAx  :{secondMax}");
         }
     }
 }
