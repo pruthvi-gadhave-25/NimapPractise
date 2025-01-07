@@ -12,6 +12,13 @@ namespace PropertiesDemo
         //multiple abstract classes cannot inheri from a class 
         //Interface has public  by default modifiers for methods and properties 
         //multiple abstract classes cannot inherit from a class 
+        ///Can an interface inherit from another interface? Yes  <summary>
+        /// Can an interface inherit from another interface? Yes //
+
+        //abstract methods are deafult vistual in abstract class  and Then must be OVERRIDEN in child class 
+        // if class implwnt interface but dont want implemnt all , method implementation then make class as abstract 
+        /// </summary>
+        /// <param name="args"></param>
 
         static void Main(string[] args)
         {
@@ -30,6 +37,11 @@ namespace PropertiesDemo
 
 
             //int n = d;
+
+            FullTimeEmployee fl = new FullTimeEmployee(30000, "Pruthvi");
+            fl.CalculateSalary();
+            Employee emp = new FullTimeEmployee(845834, "jgduw");
+            //Employee emp1 = new Employee(823, "wyegu"); not possible 
         }
 
        public  class A
@@ -114,5 +126,47 @@ namespace PropertiesDemo
             //public void Zoo() // gives error 
         }
 
+
+        //////////--------------------abstract demo -------------
+        ///
+
+        public abstract class Employee
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+
+            //abstract method cn have constructor 
+            public Employee(int id , string name )
+            {
+                this.Id = id;
+                this.Name = name;
+            }
+
+            //thsis can be done only in abstraction class 
+            public abstract decimal CalculateSalary();
+
+            public void GetDetails()
+            {
+                Console.WriteLine($"EMployee Name is {Name}  and its id is  : {Id}");
+            }
+        }
+
+    
+
+
+        public class FullTimeEmployee : Employee
+        {
+                
+            public FullTimeEmployee(int id ,string name) :base(id, name )
+            {
+
+            }
+            public decimal MonthlySalary { get; set; }
+
+            public override   decimal  CalculateSalary()
+            {
+                return MonthlySalary;
+            }
+        }
     }
 }
