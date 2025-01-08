@@ -4,7 +4,7 @@
     {
         public int OrderId {  get; set; }
 
-       public List<ProductOrder> ProductOrders { get; set; }
+       public virtual  List<ProductOrder> ProductOrders { get; set; }
 
     }
 }

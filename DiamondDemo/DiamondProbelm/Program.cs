@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Security.Cryptography;
 
 namespace DiamondProblem
 {
@@ -66,4 +67,14 @@ namespace DiamondProblem
         }
     }
 
+     public interface ICheck
+    {
+        void Check();
+        void Check(int num);
+    }
+
+    //public class OverrideCheck : ICheck
+    //{
+      
+    //}
 }

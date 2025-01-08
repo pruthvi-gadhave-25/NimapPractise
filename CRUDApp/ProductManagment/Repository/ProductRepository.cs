@@ -62,6 +62,8 @@ namespace ProductManagment.Repository
         {
             try
             {
+
+                 //var product = _context.Products.FirstOrDefault( p => p.ProductId  == )
                 var products =  await _context.Products.Include(c => c.Category).ToListAsync();
                 return products;
             }catch(Exception ex)
@@ -75,7 +77,11 @@ namespace ProductManagment.Repository
         {
             try
             {
+                //var product = await _context.Products.Include(c => c.Category)
+                //    .FirstOrDefaultAsync( p=> p.ProductId == id); //Eager Loading 
+                Console.WriteLine("Query On Console");
                 var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+                Console.WriteLine($"products  with category :{product.Category.CategoryName} " );
                 return product;
             }catch(Exception ex)
             {

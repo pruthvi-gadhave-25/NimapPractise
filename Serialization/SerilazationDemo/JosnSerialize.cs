@@ -18,7 +18,7 @@ namespace SeriliazationDemo
 
             // Serialize the  object to a JSON string
             string jsonString = JsonConvert.SerializeObject(person);
-            Console.WriteLine(jsonString);
+            Console.WriteLine($" Serialzation of  Perosn : {jsonString}");
 
             var deserilazePerson = JsonConvert.DeserializeObject<Person>(jsonString);
             Console.WriteLine($"" +

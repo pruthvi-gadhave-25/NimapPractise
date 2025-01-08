@@ -10,19 +10,20 @@
 
             //BasicException.ExceptionD();
 
-            //FinallyException.FinallyDemo();
-            try
-            {
-                Console.WriteLine("Inside Main");
-                var tdemo = new ThrowCatch();
-                tdemo.Method2();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Insdide main catch ");
-                throw;
+            FinallyException.FinallyDemo();
 
-            }
+            //try
+            //{
+            //    Console.WriteLine("Inside Main");
+            //    var tdemo = new ThrowCatch();
+            //    tdemo.Method2();
+            //}
+            //catch(Exception ex)
+            //{
+            //    Console.WriteLine("Insdide main catch ");
+            //    throw;
+
+            //}
 
            
 

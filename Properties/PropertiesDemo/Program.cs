@@ -42,6 +42,14 @@ namespace PropertiesDemo
             fl.CalculateSalary();
             Employee emp = new FullTimeEmployee(845834, "jgduw");
             //Employee emp1 = new Employee(823, "wyegu"); not possible 
+
+            var strCheck = "eugf";
+            dynamic name = 45;
+
+
+            object first = 10;
+            first = "wey";
+            Console.WriteLine( "First VAlue "+first);
         }
 
        public  class A
@@ -83,9 +91,10 @@ namespace PropertiesDemo
         {
             void DoSoemthingB();
         }
-        interface IA : IB
+        interface IA 
         {
-            void DoSoemthingA();
+       
+            void DoSoemthingB();
 
         }
 
@@ -167,6 +176,12 @@ namespace PropertiesDemo
             {
                 return MonthlySalary;
             }
+        }
+
+        public class DemoClass : IA, IB
+        {
+            void IA.DoSoemthingB() { }
+            void IB.DoSoemthingB() {}
         }
     }
 }

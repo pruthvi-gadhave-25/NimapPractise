@@ -8,9 +8,9 @@
         public int CategoryId { get; set; }
         public bool isActive { get; set; } = true;
 
-        public Category? Category { get; set; }
+        public virtual Category? Category { get; set; }
 
-        public List<ProductOrder> ProductOrders { get; set; }
+        public virtual  List<ProductOrder> ProductOrders { get; set; }
 
     }
 }
