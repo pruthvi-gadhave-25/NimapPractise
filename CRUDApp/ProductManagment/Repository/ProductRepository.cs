@@ -2,6 +2,7 @@
 using ProductManagment.Repository.Interface;
 using ProductManagment.Data ;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.X86;
 namespace ProductManagment.Repository
 {
     public class ProductRepository : IProductRepository
@@ -113,3 +114,18 @@ namespace ProductManagment.Repository
         }
     }
 }
+//Lazy loading
+// https://dotnettutorials.net/lesson/lazy-loading-in-entity-framework-core/#:~:text=For%20Lazy%20Loading%20to%20work,mechanism%20when%20they%20are%20accessed.
+
+
+//Use Eager Loading when:
+
+//You know in advance that the related data is always required.
+//You want to avoid multiple round trips to the database and ensure all necessary data is fetched in a single query.
+//You are dealing with batch processing or report generation, where all related data is needed upfront.
+
+//Use Lazy Loading when:
+
+//You don’t always need the related data and want to defer loading until the data is explicitly accessed.
+//You want to minimize the initial query size and only load related data as needed.
+//You are working with user-triggered actions, loading related data based on user interaction (e.g., expanding a section in the UI to view related information).
