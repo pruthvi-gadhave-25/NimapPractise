@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AsyncDemo
+﻿namespace AsyncDemo
 {
-     class AsynTaskDemo
+    class AsynTaskDemo
     {
         //here Long task will run after new thread cause it i goes sleep for 10 seconds 
         public static async  void Method()
