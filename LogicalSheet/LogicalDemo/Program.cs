@@ -26,6 +26,11 @@ namespace LogicalDemo
             //------------2nd largest Array without sorting  -------------------
             LogicalProblems.SecondLargest();
             //------------2nd largest Array without sorting  -------------------
+
+            //------------Missing Numbers  -------------------
+            int[] numbers = { 1, 2, 3, 4, 5, 7 }; //
+            LogicalProblems.MissingNumber(numbers);
+            //------------Missing Numbers  -------------------
         }
     }
 }

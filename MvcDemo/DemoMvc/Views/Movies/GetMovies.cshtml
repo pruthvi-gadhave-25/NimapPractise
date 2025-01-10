@@ -1,0 +1,55 @@
+﻿@model List<Movie> 
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "All movies";
+}
+
+<h2>Movies</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              Title
+            </th>
+            <th>
+               ReleaseDate
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <h2>Tbody</h2>
+        @* @foreach (var item in Model) *@
+        @* { *@
+        @*     <tr> *@
+        @*         <td> *@
+        @*             @Html.DisplayFor(modelItem => item.Title) *@
+        @*         </td> *@
+        @*         <td> *@
+        @*             @Html.DisplayFor(modelItem => item.ReleaseDate) *@
+        @*         </td> *@
+        @*         <td> *@
+        @*             @Html.DisplayFor(modelItem => item.Genere) *@
+        @*         </td> *@
+        @*         <td> *@
+        @*             @Html.DisplayFor(modelItem => item.Price) *@
+        @*         </td> *@
+        @*         <td> *@
+        @*             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
+        @*             <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
+        @*             <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+        @*         </td> *@
+        @*     </tr> *@
+        @* } *@
+    </tbody>
+    </table>

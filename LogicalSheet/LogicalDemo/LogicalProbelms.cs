@@ -90,5 +90,18 @@ namespace LogicalDemo
 
             Console.WriteLine( $"max is {max} ans secondMAx  :{secondMax}");
         }
+
+        public static int MissingNumber(int[] numbers)
+        {   
+            //using for loop greater number logic 
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (!(numbers[i + 1] == (numbers[i] + 1)))
+                {
+                    return numbers[i] + 1;
+                }
+            }
+            return 0;
+        }
     }
 }

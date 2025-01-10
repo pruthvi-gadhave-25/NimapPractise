@@ -36,6 +36,14 @@ public  class Program
         }
 
 
+        public async static Task FetchDataAsync() {
+
+            Console.WriteLine("Fetc data aysnc ");
+            return ; 
+
+        }
+
+
 
        
     }
