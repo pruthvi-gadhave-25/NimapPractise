@@ -11,25 +11,31 @@
 <table class="table">
    <thead>
         <tr>
-            <td>
+            
+              
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Subsribed</th>
-            </td>
+            <th>Action</th>
+      
         </tr>
    </thead>
    <tbody>
        @foreach(var student in Model){
             
            <tr>
-               <td>@student.Name</td>
-               <td>@student.Phone</td>
+               <td>@student.Name</td>              
                <td>@student.Email</td>
+                <td>@student.Phone</td>
                <td>@student.Subscribed</td>
                <td > 
                    <a asp-controller="Student" asp-action="Edit"  asp-route-id="@student.Id">Edit</a>
+                   
                </td>
+                <td>
+                   
+                </td>
            </tr>
            
        }

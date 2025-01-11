@@ -3,6 +3,7 @@ using DemoMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using NuGet.Versioning;
 
 namespace DemoMvc.Controllers
 {
@@ -26,7 +27,7 @@ namespace DemoMvc.Controllers
         {
 
             var student = new Student
-            {
+            {   
                 Name = studentViewMoel.Name,
                 Phone = studentViewMoel.Phone,
                 Email = studentViewMoel.Email,
@@ -34,7 +35,7 @@ namespace DemoMvc.Controllers
             };
             await _context.Students.AddAsync(student);
             await _context.SaveChangesAsync();
-            return View();
+            return RedirectToAction("List");
         }
 
         [HttpGet]
@@ -55,19 +56,33 @@ namespace DemoMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Student viewModal)
         {
+            Console.WriteLine(viewModal.Id);
             var student = await _context.Students.FindAsync(viewModal.Id);
                 
-            if(student ! == null)
+            if(student is not  null)
             {
                 student.Name = viewModal.Name;
                 student.Phone = viewModal.Phone;
                 student.Email = viewModal.Email;
                 student.Subscribed = viewModal.Subscribed;
-
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction("List" ,"Students");
+           
+            return RedirectToAction("List" ,"Student");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Student viewModal)
+        {
+            var student = await _context.Students.AsNoTracking().FirstOrDefaultAsync(s => s.Id == viewModal.Id);
+            if(student != null)
+            {
+                _context.Students.Remove(student);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("List", "Student");
         }
     }
 }
