@@ -2,8 +2,6 @@
 using DemoMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using NuGet.Versioning;
 
 namespace DemoMvc.Controllers
 {
@@ -25,17 +23,27 @@ namespace DemoMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Add( AddStudentViewMoel studentViewMoel)
         {
+            if (ModelState.IsValid)
+            {               
+                var student = new Student
+                {
+                    Name = studentViewMoel.Name,
+                    Phone = studentViewMoel.Phone,
+                    Email = studentViewMoel.Email,
+                    Subscribed = studentViewMoel.Subscribed,
+                    //Photo = studentViewMoel.Photo,
+                };
 
-            var student = new Student
-            {   
-                Name = studentViewMoel.Name,
-                Phone = studentViewMoel.Phone,
-                Email = studentViewMoel.Email,
-                Subscribed = studentViewMoel.Subscribed,
-            };
-            await _context.Students.AddAsync(student);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("List");
+                await _context.Students.AddAsync(student);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("List");
+            }
+
+            else
+            {
+                return View(studentViewMoel);
+            }               
+            
         }
 
         [HttpGet]

@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["TItle"] = "Student List";
 }
 
 @model List<Student>
@@ -10,15 +11,12 @@
 
 <table class="table">
    <thead>
-        <tr>
-            
-              
+        <tr>                          
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Subsribed</th>
-            <th>Action</th>
-      
+            <th>Action</th>      
         </tr>
    </thead>
    <tbody>
