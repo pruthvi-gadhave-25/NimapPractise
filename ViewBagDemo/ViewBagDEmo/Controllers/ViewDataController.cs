@@ -24,3 +24,4 @@ namespace ViewBagDEmo.Controllers
     }
 }
 //Need to typecst in views 
+//access during only runtime 

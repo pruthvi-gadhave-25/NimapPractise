@@ -31,6 +31,22 @@ namespace LogicalDemo
             int[] numbers = { 1, 2, 3, 4, 5, 7 }; //
             LogicalProblems.MissingNumber(numbers);
             //------------Missing Numbers  -------------------
+
+
+
+            //------------Prime Numbers from given  Numbers  -------------------
+            Console.WriteLine("\nPrime Numbers from given  Numbers");
+            int n = 10;
+            for (int i = 2; i < n; i++)
+            {
+                bool isNumPrime = LogicalProblems.IsPrimeNum(i);
+                if (isNumPrime)
+                {
+                    Console.Write(i + ",");
+                }
+            }
+            Console.WriteLine("\n");
+            //------------Missing Numbers  -------------------
         }
     }
 }
