@@ -41,7 +41,9 @@ namespace ProductManagment.Controllers
             }
         }
 
-        [Authorize ]
+
+        // role user and Admin can acccess this method 
+        [Authorize(Roles ="User ,Admin") ]
         [HttpGet("id")]
         public async Task<IActionResult> GetUserByID(int id)
         {
@@ -82,7 +84,9 @@ namespace ProductManagment.Controllers
                     new Claim(JwtRegisteredClaimNames.Sub , _configuration["Jwt:Subject"]),
                     new Claim(JwtRegisteredClaimNames.Jti , Guid.NewGuid().ToString() ) ,
                     new Claim("userId", userLogin.Id.ToString()),
-                    new Claim("userName", userLogin.UserName.ToString())                                
+                    new Claim("userName", userLogin.UserName.ToString()),
+                    new Claim(ClaimTypes.Role , "User"),
+                    new Claim(ClaimTypes.Role , userLogin.Role)
                 };
 
                 var key =  new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -107,5 +111,12 @@ namespace ProductManagment.Controllers
 
         }
 
-    }
+        // if role other than Admin then no access 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin-data")]
+        public IActionResult GetAdminData()
+                {
+                    return Ok("This is admin data.");
+                }
+        }
 }
