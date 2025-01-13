@@ -29,6 +29,9 @@ namespace ProductManagment.Repository
             }
         }
 
+
+
+
         public async Task<bool> DeleteCategory(int id)
         {
             try
@@ -64,7 +67,7 @@ namespace ProductManagment.Repository
         }
 
         public async Task<Category> GetCategory(int id)
-        {
+        {   
             return await _context.Categories.FindAsync(id);
         }
 

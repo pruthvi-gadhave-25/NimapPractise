@@ -82,7 +82,7 @@ namespace ProductManagment.Repository
                 //    .FirstOrDefaultAsync( p=> p.ProductId == id); //Eager Loading 
                 Console.WriteLine("Query On Console");
                 var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
-                Console.WriteLine($"products  with category :{product.Category.CategoryName} " );
+                //Console.WriteLine($"products  with category :{product.Category.CategoryName} " );
                 return product;
             }catch(Exception ex)
             {
