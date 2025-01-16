@@ -1,0 +1,10 @@
+﻿namespace OCPPrinciple
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+
+        }
+    }
+}

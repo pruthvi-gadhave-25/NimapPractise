@@ -11,8 +11,10 @@ using ProductManagment.Services.Interface;
 
 namespace ProductManagment.Controllers
 {
+ //   [Authorize(Roles ="Admin")] whole controller will have Admin Access 
     [Route("api/[controller]")]
     [ApiController]
+    public class UserController : ControllerBase
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -84,8 +86,7 @@ namespace ProductManagment.Controllers
                     new Claim(JwtRegisteredClaimNames.Sub , _configuration["Jwt:Subject"]),
                     new Claim(JwtRegisteredClaimNames.Jti , Guid.NewGuid().ToString() ) ,
                     new Claim("userId", userLogin.Id.ToString()),
-                    new Claim("userName", userLogin.UserName.ToString()),
-                    new Claim(ClaimTypes.Role , "User"),
+                    new Claim("userName", userLogin.UserName.ToString()),                  
                     new Claim(ClaimTypes.Role , userLogin.Role)
                 };
 
@@ -110,6 +111,8 @@ namespace ProductManagment.Controllers
             return BadRequest();
 
         }
+
+
 
         // if role other than Admin then no access 
         [Authorize(Roles = "Admin")]
