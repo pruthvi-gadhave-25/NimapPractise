@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace LInqQueries
 {
@@ -43,11 +41,11 @@ namespace LInqQueries
         public static void LinqDemo2()
         {
             List<Student> list = new List<Student>() {
-                 new Student {Id = 101, Name = "Sravan", Age = 12 , Gender= "Male"},
-                 new Student {Id = 103, Name = "manoja", Age = 13 , Gender= "Male"},
-                new Student  {Id = 104, Name = "sathwik", Age = 12 , Gender= "Male"},
-                new Student  {Id = 105, Name = "Saran",  Age = 15 , Gender= "Male"},
-                   new Student  {Id = 106, Name = "Shruti",  Age = 15 , Gender= "Female"}
+                 new Student {ID = 101, Name = "Sravan", Age = 12 , Gender= "Male"},
+                 new Student {ID = 103, Name = "manoja", Age = 13 , Gender= "Male"},
+                new Student  {ID = 104, Name = "sathwik", Age = 12 , Gender= "Male"},
+                new Student  {ID = 105, Name = "Saran",  Age = 15 , Gender= "Male"},
+                   new Student  {ID = 106, Name = "Shruti",  Age = 15 , Gender= "Female"}
             };
 
 
@@ -76,5 +74,55 @@ namespace LInqQueries
                 Console.WriteLine($"ID : {emp.ID}, Name : {emp.Name}, Department : {emp.Department}");
             }
          }
+
+        //pagination using raw sql 
+
+        public static void PaginationRawSql( int pgNumber , int noOfRows)
+        {
+
+            List<Student> students = new List<Student>();
+            string connString = "Server=DESKTOP-HG3NPSB;Database=StudentPortalDb;Trusted_Connection=True";
+            int recordNumber = (pgNumber - 1) * noOfRows;
+
+            string query = $"SELECT * FROM student ORDER BY ID OFFSET {recordNumber} ROWS FETCH NEXT {noOfRows} ROWS ONLY;";
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            {
+               
+                SqlCommand cmd = new SqlCommand(query ,connection);
+                try
+                {
+                    connection.Open();
+                   SqlDataReader reader =   cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Student student = new Student
+                        {
+                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                            Name = reader.GetString(reader.GetOrdinal("namefirst"))
+                        };
+
+
+                        students.Add(student);
+                    }
+
+                    foreach (var student in students)
+                    {
+                        Console.WriteLine($"ID: {student.ID}, Name: {student.Name}");
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+
+
+
+        }
     }
 }
