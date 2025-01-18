@@ -55,3 +55,13 @@ namespace IEnumVsIQuery
 //IQueryable is best for querying data from out-memory (like remote database, service) collections.
 //While querying data from a database, IQueryable executes the select query on the server side with all filters.
 //IQueryable supports lazy loading. Hence it is suitable for paging-like scenarios
+
+
+
+//IEUMERABLE  
+//Purpose: It provides a simple iteration over a collection of a specified type. It’s primarily used for in-memory collections like arrays, lists, etc.
+//Execution: When you use LINQ methods on an IEnumerable, the query is executed in the client’s memory. This means all the data is loaded into memory from the data source (like a database), and the operation is performed.
+//Methods: The extension methods for IEnumerable are defined in the System.Linq.Enumerable class.
+//Deferred Execution: It supports deferred execution, but the query logic is executed locally on the client side.
+//Use Case: Best suited for working with in-memory data where the dataset is not too large
+
