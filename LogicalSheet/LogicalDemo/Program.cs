@@ -47,6 +47,10 @@ namespace LogicalDemo
             }
             Console.WriteLine("\n");
             //------------Missing Numbers  -------------------
+
+            //------------Squre Root  -------------------
+            int num =LogicalProblems.SquareRoot(16);
+            Console.WriteLine("sqaure root  :"+ num ) ;
         }
     }
 }

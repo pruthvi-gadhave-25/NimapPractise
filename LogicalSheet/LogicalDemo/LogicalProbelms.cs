@@ -115,5 +115,18 @@ namespace LogicalDemo
             return true;
 
         }
+
+        public static int  SquareRoot(int num )
+        {
+            //WAP for getting a square root of a given number.
+
+          
+            int res = 1;
+            while (res * res <= num) {
+                res++;
+            }
+
+            return res - 1;
+        }
     }
 }
