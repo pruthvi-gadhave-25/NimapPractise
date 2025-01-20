@@ -10,7 +10,7 @@ namespace LInqQueries
         public static void LinqDemo1()
         {
             List<int> list = new List<int>() {
-                1,2,3,4,5,6,7,8,90,3
+                1,2,3,4,5,6,7,8,90,3 ,3,4,2
             };
             List<string> my_list = new List<string>() {
                 "This is my Dog",
@@ -19,7 +19,7 @@ namespace LInqQueries
                 "Name of the cat is Mewmew"
             };
 
-
+           
 
             var res = my_list.Contains("Dog");
 
@@ -36,6 +36,11 @@ namespace LInqQueries
                                      select number; 
 
             foreach (int x in list2) Console.Write($"{x} ,");
+
+
+            var dups = list.Distinct();
+            Console.WriteLine("Dupliactes in List ");
+            foreach( int x in list) Console.Write(x+" ,");
         }
 
         public static void LinqDemo2()

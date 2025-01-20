@@ -6,13 +6,13 @@ namespace LInqQueries
     {
         static void Main(string[] args)
         {
-            //LinqList.LinqDemo1();
+            LinqList.LinqDemo1();
             //LinqList.LinqDemo2();
             //Console.WriteLine("\nPagination\n");
             //LinqList.PaginationDemo(2, 5);
 
             //Console.WriteLine("\n Pagination usig raws sql  ");
-            LinqList.PaginationRawSql(3 , 10);
+          //  LinqList.PaginationRawSql(3 , 10);
         }
     }
 }
