@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LogicalDemo
@@ -127,6 +128,66 @@ namespace LogicalDemo
             }
 
             return res - 1;
+        }
+
+        //. WAP with 2 different logic, to find all duplicate numbers in an array
+        public static List<int> DuplicatesBasic(int[] nums)
+        {
+            //  int[]  nums =  {4,3,2,7,8,2,3,1};
+            List<int> list = new List<int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (nums[i] == nums[j])
+                    {
+                        list.Add(nums[i]);
+                    }
+                }
+
+            }
+
+            return list;
+        }
+
+        public static HashSet<int> DupsUsingHash(int[] nums) { 
+            HashSet<int> dups =  new HashSet<int>();
+
+            if(nums.Length == 1)
+            {
+                dups.Add(nums[0]);
+            }
+
+            foreach(var item in nums)
+            {
+                dups.Add(item);
+            }
+
+            return dups;
+
+        }
+
+
+        //not completed 
+        public static void DupsUsingDictionary(int[] nums)
+        {
+
+            //not completed 
+            HashSet<int> dups = new HashSet<int>();
+
+            if (nums.Length == 1)
+            {
+                dups.Add(nums[0]);
+            }
+
+            foreach (var item in nums)
+            {
+                dups.Add(item);
+            }
+
+           // return dups;
+
         }
     }
 }

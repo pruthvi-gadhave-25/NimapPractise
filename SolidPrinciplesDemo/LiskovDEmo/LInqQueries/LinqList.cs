@@ -41,11 +41,11 @@ namespace LInqQueries
         public static void LinqDemo2()
         {
             List<Student> list = new List<Student>() {
-                 new Student {ID = 101, Name = "Sravan", Age = 12 , Gender= "Male"},
-                 new Student {ID = 103, Name = "manoja", Age = 13 , Gender= "Male"},
+                new Student {ID = 101, Name = "Sravan", Age = 12 , Gender= "Male"},
+                new Student {ID = 103, Name = "manoja", Age = 13 , Gender= "Male"},
                 new Student  {ID = 104, Name = "sathwik", Age = 12 , Gender= "Male"},
                 new Student  {ID = 105, Name = "Saran",  Age = 15 , Gender= "Male"},
-                   new Student  {ID = 106, Name = "Shruti",  Age = 15 , Gender= "Female"}
+                new Student  {ID = 106, Name = "Shruti",  Age = 15 , Gender= "Female"}
             };
 
 
