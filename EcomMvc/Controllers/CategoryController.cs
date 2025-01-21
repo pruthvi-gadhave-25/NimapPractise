@@ -1,16 +1,18 @@
 ﻿using EcomMvc.Data;
 using EcomMvc.Models;
+using EcomMvc.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EcomMvc.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
-        public CategoryController(AppDbContext appDbContext)
+        private readonly ICategoryRepository _categoryRepository;
+        public CategoryController(AppDbContext appDbContext ,ICategoryRepository categoryRepo)
         {
             _context = appDbContext;
+            _categoryRepository = categoryRepo;
         }
         public IActionResult Index()
         {
@@ -51,5 +53,67 @@ namespace EcomMvc.Controllers
             }
             return View(categories);
         }
+
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Category? category = _context.Categories.FirstOrDefault(c => c.CategoryId == id);
+            if(category == null)
+            {
+                return NotFound("Category is null");
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Category category)
+        {
+
+
+            if (category == null)
+            {
+                return NotFound("Id does not exists Or Product Not found");
+            }
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            //return Ok(" Category Deleted Succesfully");
+            return RedirectToAction("ListCategory");
+
+
+        }
+
+        //Edit 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+
+            var category = _context.Categories.FirstOrDefault(p => p.CategoryId == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        public  IActionResult Edit(Category category)
+        {
+           Category existingCategory =  _context.Categories.FirstOrDefault(c => c.CategoryId==category.CategoryId);
+            existingCategory.CategoryName = category.CategoryName;
+           
+
+            _context.SaveChangesAsync();
+            return RedirectToAction("ListCategory");
+        }
+
+
+        public IActionResult GetAllCategories()
+        {
+            _categoryRepository.GetAllCategories();
+        }
+      
+
     }
 }

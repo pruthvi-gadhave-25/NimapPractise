@@ -2,12 +2,19 @@
 
 @model List<Product>
 
-<h1>Products</h1>
+<div class="d-flex justify-content-between">
+    <h5>Products</h5>
+    <span class="p-2">
+        <a class="nav-link text-dark btn btn-sm btn-primary" asp-area="" asp-controller="Product" asp-action="Add">Add Product</a>
+    </span>
+</div>
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Name</th>
+            <th>Category</th>
+            <th>Actions</th>
            
         </tr>
     </thead>
@@ -17,13 +24,13 @@
 
             <tr>
                 <td>@products.ProdcutName</td>
+                <td>@products?.Category?.CategoryName</td>
 
                 <td>
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@products.ProductId">Edit</a>
-
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@products.ProductId" class="btn btn-primary btn-sm">Edit</a>
+                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@products.ProductId" class="btn btn-danger btn-sm">Delete</a>
                 </td>
-                <td>
-                </td>
+               
             </tr>
 
         }

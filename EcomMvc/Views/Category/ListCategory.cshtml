@@ -1,27 +1,29 @@
 ﻿
 @model List<Category>
-<h1>Categories</h1>
+<div class="d-flex justify-content-between">
+    <h6>Category</h6>
+    <span class="p-2">
+        <a class="nav-link text-dark btn btn-primary btn-sm" asp-area="" asp-controller="Category" asp-action="Add">Add Category</a>
+    </span>
+</div>
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Name</th>
-       
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="">
         @foreach (var category in Model)
         {
 
             <tr>
-                <td>@category.CategoryName</td>
-            
+                <td>@category.CategoryName</td>            
                 <td>
-                    <a asp-controller="Student" asp-action="Edit" asp-route-id="@category.CategoryId">Edit</a>
-
-                </td>
-                <td>
-                </td>
+                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.CategoryId"class="btn btn-primary btn-sm">Edit</a>
+                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@category.CategoryId"class="btn btn-danger btn-sm">Delete</a>
+                </td>                
             </tr>
 
         }

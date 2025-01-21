@@ -1,0 +1,17 @@
+﻿@model EcomMvc.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h6>Are you sure you want to delete @Model.ProdcutName  Product ? </h6>
+
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> |
+    <a class="text-decoration-none" asp-action="ListProducts"> <small>Back to List</small> </a>
+    </form>
+</div>

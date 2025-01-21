@@ -1,4 +1,5 @@
 using EcomMvc.Data;
+using EcomMvc.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 string conncetionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conncetionString));
+
+///
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>()
+//
+builder.Services.AddScoped<ICategoryRepository , CategoyRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

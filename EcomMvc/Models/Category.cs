@@ -7,7 +7,7 @@ namespace EcomMvc.Models
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "Name is Required")]
-        public string CategoryName { get; set; }
-        public bool IsActive { get; set; } = true;
+        public string? CategoryName { get; set; }
+        public bool? IsActive { get; set; } = true;
     }
 }

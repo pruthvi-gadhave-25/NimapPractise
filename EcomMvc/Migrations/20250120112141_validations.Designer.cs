@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcomMvc.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(CategoryRepository))]
     [Migration("20250120112141_validations")]
     partial class validations
     {
