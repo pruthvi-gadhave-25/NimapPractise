@@ -1,12 +1,15 @@
 ﻿using EcomMvc.Data;
 using EcomMvc.Models;
+//using System.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
+
 namespace EcomMvc.Controllers
-{
+{   
     public class ProductController : Controller
     {
 
@@ -21,8 +24,8 @@ namespace EcomMvc.Controllers
             return View();
         }
 
-
         [HttpGet]
+        
         public IActionResult Add()
         {
             
@@ -54,10 +57,14 @@ namespace EcomMvc.Controllers
 
 
         [HttpGet]
+        [OutputCache (Duration =10)]
+       // [HandleError] //need package using Microsoft.Web.Mvc; 
         public async Task<IActionResult> ListProducts()
         {
+            //throw new Exception("this is new Exception");
+
             List<Product> products =await  _context.Products.Include(c=> c.Category).ToListAsync();
-          
+        //OutputCache    //ViewData["date"] = DateTime.Now;
             return View(products);
         }
 

@@ -1,11 +1,12 @@
 ﻿using EcomMvc.Data;
 using EcomMvc.Models;
+using EcomMvc.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcomMvc.Repository
 {
-    public class CategoyRepository : ICategoryRepository
+    public class CategoyRepository : ICategoryRepositoy
     {
 
         private readonly AppDbContext _context;
@@ -17,15 +18,15 @@ namespace EcomMvc.Repository
         }
 
 
-        public async Task<List<Category>> GetAllCategories()
-        {
-            //List<Category> categories = await _context.Categories.ToListAsync();
-            //return categories;
+        //public async Task<List<Category>> GetAllCategories()
+        //{
+        //    //List<Category> categories = await _context.Categories.ToListAsync();
+        //    //return categories;
 
-            var categories = _context.Categories.FromSqlRaw<Category>("GetAllCategories").ToList();
-            return categories; 
+        //    var categories = _context.Categories.FromSqlRaw<Category>("GetAllCategories").ToList();
+        //    return categories; 
 
         }
 
-    }
+    
 }

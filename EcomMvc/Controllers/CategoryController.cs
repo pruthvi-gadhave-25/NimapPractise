@@ -1,6 +1,6 @@
 ﻿using EcomMvc.Data;
 using EcomMvc.Models;
-using EcomMvc.Repository;
+using EcomMvc.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcomMvc.Controllers
@@ -8,11 +8,10 @@ namespace EcomMvc.Controllers
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(AppDbContext appDbContext ,ICategoryRepository categoryRepo)
+        private readonly ICategoryRepositoy _categoryRepository;
+        public CategoryController(AppDbContext appDbContext )
         {
             _context = appDbContext;
-            _categoryRepository = categoryRepo;
         }
         public IActionResult Index()
         {
@@ -109,10 +108,11 @@ namespace EcomMvc.Controllers
         }
 
 
-        public IActionResult GetAllCategories()
-        {
-            _categoryRepository.GetAllCategories();
-        }
+        //public async Task<IActionResult>  GetAllCategories()
+        //{
+        //  var res =  await  _categoryRepository.GetAllCategories();
+        //    return res;
+        //}
       
 
     }

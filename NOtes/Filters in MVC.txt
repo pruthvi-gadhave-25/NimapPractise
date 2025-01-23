@@ -1,0 +1,42 @@
+** Action Filters -- Before Calling Aciton Methods in Controller we need to applly some logic there we use Action Filters 
+		  -- e.g. is User Login 	
+						OR 
+		  -- After Excution of Action method 
+		  e.g. when exception occures in Action method in controller we can handle using action filters. 	
+
+** --Filters are  used as Attributes
+
+ 
+** Sequence Of Filters 
+------------------------------------------------------
+Authentication --> Authorization --> Action --> Result --->> Exception
+-------------------------------------------------------
+
+Filter  Type	 Interface	       	Description
+
+Authentication	 IAuthenticationFilter	These are Runs, before any other filters or the action method.
+Authorization	 IAuthorizationFilter	These Runs first, before any other filters or the action method.
+Action	         IActionFilter		These Runs before and after the action method.
+Result	         IResultFilter		Runs before and after the action result are executed.
+Exception	 IExceptionFilter	Runs only if another filter, the action method, or the action resultthrows an exception.
+
+--------------------------------------------------------------------------------
+
+
+	-----** WE can Apply filter On  3 Levels :-
+1. Action Methods
+2. Controller 
+3. Application Level
+
+
+	--** Action Filters **--
+1.OutputCache  -- use to cache data on action method for specif time in sec  
+			[HttpGet]
+			OutputCache(Duration= 10)    //time is in sec 
+			public IActionResult Index(){}
+
+2.HandleError  --Rediredt to custome error Page when error triggered  
+		[HandleError]
+
+3.Authorize   allow authorize users 
+		[Authorize]
