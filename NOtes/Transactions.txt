@@ -1,0 +1,42 @@
+** Transactions ** 
+--------------------
+
+A transaction is a set of SQL statements that should be executed as one unit. 
+That means a transaction ensures that either all of the command succeeds or none of them. 
+
+If one of the commands in the transaction fails, all of the commands fail and any data that is modified in the database is rolled back.
+----------------------------------------------------------------------
+
+*** Transaction Management **  (Do Everything or Nothing )	
+    -------------------------
+	
+e.g 1. Withdraw money 
+    2. Deposit money 
+these two operations at same time 
+--Only Works with DML commnads (Insert ,Update ,Delete)
+
+1. BEGIN Transactions 
+2.Processs DB Commnds 
+3. If Error occurs then ROllBack  ELSE Commit 
+
+
+-----------------------------------Syntax ---- //Adding two same recored error will go to rollback 
+BEGIN TRANSACTION
+INSERT INTO Product VALUES(110,'Product-10',600, 30)
+INSERT INTO Product VALUES(110,'Product-10',600, 30)
+IF(@@ERROR > 0)
+BEGIN
+    Rollback Transaction
+END
+ELSE
+BEGIN
+   Commit Transaction
+END
+-----------------------------------Syntax------
+
+
+
+** Concurreny**  
+
+--Concurrency is a situation where two users or transactions are trying to access the same information
+--it can create abnormal condition

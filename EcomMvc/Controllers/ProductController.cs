@@ -19,8 +19,16 @@ namespace EcomMvc.Controllers
             _context = appDbContext;
         }
 
+
+        public string IsValidToken()
+        {
+            var userToken = HttpContext.Session.GetString("token");
+            return userToken;
+         
+        }
         public IActionResult Index()
         {
+          
             return View();
         }
 
@@ -62,7 +70,11 @@ namespace EcomMvc.Controllers
         public async Task<IActionResult> ListProducts()
         {
             //throw new Exception("this is new Exception");
-
+            var token = IsValidToken();
+            if (token == null || token == "")
+            {
+                return RedirectToAction("Login", "Login");
+            }
             List<Product> products =await  _context.Products.Include(c=> c.Category).ToListAsync();
         //OutputCache    //ViewData["date"] = DateTime.Now;
             return View(products);

@@ -1,0 +1,8 @@
+**  ------Sessions **-----
+
+Session: Server-side storage that is automatically cleaned up when it expires.
+Cookies: Client-side storage, which persists data across sessions unless manually cleared.
+
+** -- Session State Modes
+	
+	

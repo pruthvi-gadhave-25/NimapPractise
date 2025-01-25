@@ -20,7 +20,17 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 builder.Services.AddScoped<ICategoryRepositoy, CategoyRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHelper, AuthenticationHelper>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+
+//SESSIONS related 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); 
+    options.Cookie.HttpOnly = true; // session cookie only accessible by server 
+    options.Cookie.IsEssential = true; 
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -57,6 +67,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//middleware 0f Session 
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

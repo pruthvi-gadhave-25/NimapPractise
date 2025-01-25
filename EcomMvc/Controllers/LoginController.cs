@@ -39,11 +39,21 @@ namespace EcomMvc.Controllers
                 if (existingUser != null)
                 {
                     var token = _helper.IssueToken(model);
-
+                    HttpContext.Session.SetString("token", token); // exists session expires or clered 
+                    HttpContext.Session.SetString("userName", model.UserName);
                     return RedirectToAction("Index", "Home");
                 }
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            var userName =  HttpContext.Session.Get("userName");
+            HttpContext.Session.Remove("tokn");
+            HttpContext.Session.Remove("userName");
+            return RedirectToAction("Login" , "Login");
         }
 
     }
