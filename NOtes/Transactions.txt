@@ -13,7 +13,7 @@ If one of the commands in the transaction fails, all of the commands fail and an
 e.g 1. Withdraw money 
     2. Deposit money 
 these two operations at same time 
---Only Works with DML commnads (Insert ,Update ,Delete)
+--Only Works with DML commands (Insert ,Update ,Delete)
 
 1. BEGIN Transactions 
 2.Processs DB Commnds 

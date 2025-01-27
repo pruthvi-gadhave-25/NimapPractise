@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["FileUpload"] = "FIle Upload";
+
+}
+<h2>FIle Upload </h2>
+
+
+<div class="row">
+   <div class="col-md-6">
+       <form method="post" asp-controller="FileUpload" asp-action="SingleFileUpload">
+           <div class="text-danger" asp-asp-validation-summary="All"></div>
+           <input type="file" name="SingleFile" class="form-control"></input>
+           <button type="submit" name="Upload" class="btn btn-primary" >Upload</button>
+       </form>
+   </div>
+
+</div>
