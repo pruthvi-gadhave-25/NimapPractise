@@ -1,0 +1,163 @@
+ --CREATE   PROCEDURE [dbo].[GC_USP_Get_Company_UsersDetail]              
+  Declare
+    @UserId INT =1,                    
+   @IsGetAllUser BIT =1 ,                    
+   @From INT = 1,                    
+   @To INT = 10,                    
+   @Name VARCHAR(100) ='',            
+   @Status VARCHAR(15)= 'all',      
+   @TotalRecords INT                                         
+                    
+    DECLARE @CompanyId INT = 0,                    
+      @TimeZone VARCHAR(500) = '',                    
+      @TodaysDate DATE;                    
+                    
+    DECLARE @temp Table                    
+    (                    
+      TimeZone VARCHAR(500)                    
+    )                    
+    INSERT INTO @temp                    
+    EXEC [USP_GET_USER_TIMEZONE] @UserId                  
+                   
+    SELECT @TimeZone = TimeZone FROM @temp                    
+                        
+    SET @TodaysDate = (GETUTCDATE() AT TIME ZONE 'UTC' AT TIME ZONE @TimeZone)                    
+                    
+    SELECT @CompanyId = ShopId                     
+    FROM [dbo].[CompanyMemberRoleMapping]                     
+    WHERE UserId = @UserId                    
+                    
+    --IF(@IsGetAllUser = 1)                    
+    -- SET @UserId = NULL                    
+                    
+    IF(@Name = '')                    
+     SET @Name = NULL                    
+                    
+                    
+    SELECT  @TotalRecords = COUNT(1)                    
+    FROM (SELECT u.UserId                    
+       ,u.Name                         
+       ,COALESCE(cico.CheckInLatitude,0) AS CheckInLatitude                    
+       ,COALESCE(cico.CheckInLongitude,0) AS CheckInLongitude                    
+       ,cico.CheckInTime                    
+       ,cico.CheckOutTime            
+    ,cico.IsCheckedIn            
+    ,cico.IsCheckedOut            
+       ,COALESCE(gui.[Status],'JOINED') AS [Status]                    
+       ,CAST(us.IsSuperAdmin AS BIT) AS IsSuperAdmin                    
+       ,COALESCE(cico.Report,'-') AS Report
+	   ,cico.TotalTime
+	   ,cico.WorkStationId
+	   ,Max(CASE WHEN ga.TypeId =1 THEN   COALESCE(gf.Name, '-') + '[ ' + COALESCE(gt.Name, '-') + ' ]' END ) As PunchInGeoFence
+	   ,MAX(CASE WHEN ga.TypeId =2 THEN COALESCE(gf.Name, '-') + '[ ' + COALESCE(gt.Name, '-') + ' ]'END ) AS PunchOutGeoFence 
+	   ,gcu.Address 
+       FROM [dbo].[CompanyMemberRoleMapping] cmrm                     
+       INNER JOIN [dbo].[GCUserSetting] us  ON us.UserId = cmrm.UserId                    
+       INNER JOIN [dbo].[User] u  ON u.UserId = cmrm.UserId                    
+       LEFT JOIN [dbo].[Contact] c  ON u.UserId = c.ActualUserId                    
+       LEFT JOIN [dbo].[GCInviteUsers] gui  ON cmrm.ShopId = gui.CompanyId                    
+                 AND c.Id = gui.ContactId                    
+                 AND gui.[Status] != 'INVITED'                     
+       LEFT JOIN  [dbo].[GCCheckInCheckOut] cico ON cmrm.UserId = cico.UserId                    
+                AND CAST(cico.[CheckInLocalTime] AS DATE) = @TodaysDate  
+		--punchOutGeoFence  
+		  LEFT JOIN GCGeoFencingUserMapping ga ON ga.UserId = u.UserId 
+		 LEFT JOIN GCGeoFencing gf ON ga.GeoFencingId = gf.Id
+		 LEFT JOIN GCGeoFenceTypeMaster gt ON gt.Id = gf.GeoFenceTypeId
+		 LEFT JOIN  GCUserLocation  gcu ON gcu.UserId =  cico.UserId
+    INNER JOIN fn_GetMyTeam(@UserId) fgmt ON cmrm.UserId = fgmt.UserId                  
+       WHERE cmrm.ShopId = @CompanyId                    
+         AND us.IsActive = 1                    
+         AND u.IsActive = 1                    
+         --AND (@UserId IS NULL OR cmrm.UserId = @UserId)                    
+         AND (@Name IS NULL OR u.Name LIKE '%' + @Name + '%')  
+		  GROUP BY u.UserId, u.Name, cico.CheckInLatitude, cico.CheckInLongitude, cico.CheckInTime, cico.CheckOutTime, cico.IsCheckedIn, cico.IsCheckedOut, gui.[Status], us.IsSuperAdmin, cico.Report, cico.TotalTime, cico.WorkStationId , gcu.Address
+      )gcuser  WHERE  [Status] = 'JOINED'          
+             
+    AND (      
+ @Status = 'punched_in' AND (gcuser.IsCheckedIn = 1 AND gcuser.IsCheckedOut IS NULL)        
+ OR @Status = 'punched_out' AND (gcuser.IsCheckedIn = 1 AND gcuser.IsCheckedOut = 1)        
+ OR @Status = 'not_punched_in' AND ((gcuser.IsCheckedIn IS NULL AND gcuser.IsCheckedOut IS NULL))        
+ OR ((@Status = 'all') AND ((gcuser.IsCheckedIn IS NULL OR gcuser.IsCheckedIn = 1) AND (gcuser.IsCheckedOut IS NULL OR gcuser.IsCheckedOut = 1)))        
+ )        
+              
+                               
+  ;WITH tempView                     
+  (                          
+    RowNumber                    
+    ,UserId                    
+    ,Name              
+    ,CheckInLatitude                    
+    ,CheckInLongitude                    
+    ,CheckInTime                    
+    ,CheckOutTime            
+ ,IsCheckedIn           
+ ,IsCheckedOut      
+    ,[Status]                    
+    ,IsSuperAdmin                 
+    ,Report    
+ , TotalTime  
+ ,WorkStationId  
+ ,  PunchInGeoFence  
+ ,PunchOutGeoFence
+ ,PunchInAddress
+  ) AS                    
+  (                    
+  SELECT * FROM                     
+  (                    
+   SELECT ROW_NUMBER() OVER(ORDER BY Name ASC) AS [RowNumber]                    
+   ,*                      
+   FROM                     
+   (SELECT u.UserId                    
+    ,u.Name                        
+    ,COALESCE(cico.CheckInLatitude,0) AS CheckInLatitude                    
+    ,COALESCE(cico.CheckInLongitude,0) AS CheckInLongitude                    
+    ,cico.CheckInTime                    
+    ,cico.CheckOutTime            
+ ,cico.IsCheckedIn            
+ ,cico.IsCheckedOut      
+    ,COALESCE(gui.[Status],'JOINED') AS [Status]                    
+    ,CAST(us.IsSuperAdmin AS BIT) AS IsSuperAdmin                    
+    ,COALESCE(cico.Report,'-') AS Report          
+	,cico.TotalTime  
+	,cico.WorkStationId
+ ,Max(CASE WHEN ga.TypeId =1 THEN   COALESCE(gf.Name, '-') + '[ ' + COALESCE(gt.Name, '-') + ']' END ) As PunchInGeoFence
+	   ,MAX(CASE WHEN ga.TypeId =2 THEN COALESCE(gf.Name, '-') + '[ ' + COALESCE(gt.Name, '-') + ' ]'END ) AS PunchOutGeoFence    
+	   ,gcu.Address
+    FROM [dbo].[CompanyMemberRoleMapping] cmrm                     
+    INNER JOIN [dbo].[GCUserSetting] us  ON us.UserId = cmrm.UserId                    
+    INNER JOIN [dbo].[User] u  ON u.UserId = cmrm.UserId                    
+    LEFT JOIN [dbo].[Contact] c  ON u.UserId = c.ActualUserId                    
+    LEFT JOIN [dbo].[GCInviteUsers] gui  ON cmrm.ShopId = gui.CompanyId                    
+              AND c.Id = gui.ContactId                    
+              AND gui.[Status] != 'INVITED'                     
+    LEFT JOIN  [dbo].[GCCheckInCheckOut] cico ON cmrm.UserId = cico.UserId                    
+                AND CAST(cico.[CheckInLocalTime] AS DATE) = @TodaysDate  
+				  -- New JOINs to fetch PunchInGeoFence
+        LEFT JOIN GCGeoFencingUserMapping ga ON ga.UserId = u.UserId
+        LEFT JOIN GCGeoFencing gf ON ga.GeoFencingId = gf.Id
+        LEFT JOIN GCGeoFenceTypeMaster gt ON gt.Id = gf.GeoFenceTypeId
+		LEFT JOIN  GCUserLocation  gcu ON gcu.UserId =  cico.UserId
+
+ INNER JOIN fn_GetMyTeam(@UserId) fgmt ON cmrm.UserId = fgmt.UserId                  
+    WHERE cmrm.ShopId = @CompanyId            
+      AND us.IsActive = 1                    
+      AND u.IsActive = 1                    
+      --AND (@UserId IS NULL OR cmrm.UserId = @UserId)                    
+      AND (@Name IS NULL OR u.Name LIKE '%' + @Name + '%') 
+	  GROUP BY u.UserId, u.Name, cico.CheckInLatitude, cico.CheckInLongitude, cico.CheckInTime, cico.CheckOutTime, cico.IsCheckedIn, cico.IsCheckedOut, gui.[Status], us.IsSuperAdmin, cico.Report, cico.TotalTime, cico.WorkStationId ,gcu.Address
+   ) gcuser  WHERE  [Status] = 'JOINED'            
+    AND       
+  @Status = 'punched_in' AND (gcuser.IsCheckedIn = 1 AND gcuser.IsCheckedOut IS NULL)        
+ OR @Status = 'punched_out' AND (gcuser.IsCheckedIn = 1 AND gcuser.IsCheckedOut = 1)        
+ OR @Status = 'not_punched_in' AND ((gcuser.IsCheckedIn IS NULL AND gcuser.IsCheckedOut IS NULL))        
+ OR ((@Status = 'all') AND ((gcuser.IsCheckedIn IS NULL OR gcuser.IsCheckedIn = 1) AND (gcuser.IsCheckedOut IS NULL OR gcuser.IsCheckedOut = 1)))        
+  --)            
+  ) b                     
+  )                    
+                      
+  SELECT * FROM tempView   --WHERE (RowNumber BETWEEN @From AND @To)                   
+                                  
+    
+  
+  
