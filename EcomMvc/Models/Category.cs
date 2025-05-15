@@ -10,4 +10,5 @@ namespace EcomMvc.Models
         public string? CategoryName { get; set; }
         public bool? IsActive { get; set; } = true;
     }
+   
 }

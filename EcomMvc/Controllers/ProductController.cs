@@ -65,16 +65,18 @@ namespace EcomMvc.Controllers
 
 
         [HttpGet]
-        [OutputCache (Duration =10)]
+        //[OutputCache (Duration =10)]
        // [HandleError] //need package using Microsoft.Web.Mvc; 
         public async Task<IActionResult> ListProducts()
         {
             //throw new Exception("this is new Exception");
-            var token = IsValidToken();
-            if (token == null || token == "")
-            {
-                return RedirectToAction("Login", "Login");
-            }
+
+            //var token = IsValidToken();
+            //if (token == null || token == "")
+            //{
+            //    return RedirectToAction("Login", "Login");
+            //}
+
             List<Product> products =await  _context.Products.Include(c=> c.Category).ToListAsync();
         //OutputCache    //ViewData["date"] = DateTime.Now;
             return View(products);

@@ -1,0 +1,32 @@
+﻿@{
+
+    ViewBag.Title = "THird party api ";
+}
+
+
+<button id="getTask">GetData</button>
+<div id="task"></div>
+
+
+<src src="https://code.jquery.com/jquery-3.6.0.min.js"></src>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+         $("#getTask").click(function () {
+            $.ajax({
+                url: "https://dummyjson.com/todos",
+                type: "GET",
+                success: function (data) {
+                    let taskName  = data.todos[0].todo 
+                    $("#task").html("Task Name is :" + taskName);
+                },
+                error: function (xhr) {
+                    $("#task").html("Error fetching data");
+                }
+            });
+        });
+    })
+</script>

@@ -1,4 +1,5 @@
 ﻿using EcomMvc.Data;
+using EcomMvc.Filters;
 using EcomMvc.Models;
 using EcomMvc.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,7 @@ namespace EcomMvc.Controllers
         }
 
         [HttpGet]
+        [AdminAuditLogFilter]
         public IActionResult Add()
         {   
             return View();
@@ -27,9 +29,11 @@ namespace EcomMvc.Controllers
         [HttpPost]
         public IActionResult Add(Category category)
         {
+           
             if (ModelState.IsValid)
             {
                 _context.Categories.Add(category);
+                //_context.Categories.Add(cat);
                 _context.SaveChanges();
                 return RedirectToAction("ListCategory");
             }
@@ -42,8 +46,10 @@ namespace EcomMvc.Controllers
         }
 
         [HttpGet]
+        //[AdminAuditLogFilter]
         public  IActionResult ListCategory()
         {
+
              var categories =  _context.Categories.ToList();
             if(categories.Count == 0 )
             {
