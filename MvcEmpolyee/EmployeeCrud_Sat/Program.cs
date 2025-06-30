@@ -1,4 +1,6 @@
 using EmployeeCrud_Sat.Data;
+using EmployeeCrud_Sat.Services;
+using EmployeeCrud_Sat.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,12 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 string conncetionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conncetionString));
 
+
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-app.UseExceptionHandler();
+app.UseExceptionHandler("/Home/Error");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

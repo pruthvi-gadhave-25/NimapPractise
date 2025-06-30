@@ -1,13 +1,15 @@
-﻿using EmployeeCrud_Sat.Models;
+﻿using EmployeeCrud_Sat.Data;
+using EmployeeCrud_Sat.DTO;
+using EmployeeCrud_Sat.Models;
 
 namespace EmployeeCrud_Sat.Services.Interface
 {
     public interface IEmployeeService 
     {
-        Task<List<Employee>> GetAllEmployees();
-        Task<Employee> GetEmployeeByIdAsync(int id);
+        Task<List<GetEmployeeDto>> GetAllEmployees();
+        Task<GetEmployeeDto> GetEmployeeByIdAsync(int id);
 
-        Task<Employee> AddEmployeeAsync(Employee employee);
+        Task<AddEmployeeDto> AddEmployeeAsync(AddEmployeeDto employee);
       
         Task<bool> UpdateEmployeeAsync(Employee employee);
    
