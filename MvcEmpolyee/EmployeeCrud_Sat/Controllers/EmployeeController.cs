@@ -17,9 +17,17 @@ namespace EmployeeCrud_Sat.Controllers
         [HttpGet("get/employees")]
         public async Task<IActionResult> Index()
         {
-            var res =  await _employeeService.GetAllEmployees();
-           
-            return View(res);
+            try
+            {
+                var res = await _employeeService.GetAllEmployees();
+
+                return View("Index", res);
+            }
+            catch(Exception ex)
+            {   
+                Console.WriteLine(ex.Message);
+                return Content("Error : ", ex.Message);
+            }
         }
 
         [HttpPost("add/employee")]
@@ -46,6 +54,21 @@ namespace EmployeeCrud_Sat.Controllers
         {
             return View("AddEmployee");
         }
+
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    var emp = await _employeeService.GetEmployeeByIdAsync(id);
+        //    if (emp == null) return NotFound();
+
+        //    //var dto = new UpdateEmployeeDto
+        //    //{
+        //    //    Id = emp.Id,
+        //    //    Name = emp.Name,
+        //    //    Email = emp.Email,
+        //    //    Position = emp.Position
+        //    //};
+        //    return View("EditEmployee", dto);
+        //}
 
     }
 }
