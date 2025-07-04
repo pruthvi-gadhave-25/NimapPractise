@@ -63,43 +63,7 @@ namespace EmployeeCrud_Sat.Services
 
         public async Task<List<GetEmployeeDto>> GetAllEmployees()
         {
-            var newEmp = new List<GetEmployeeDto>();
-            //{
-            //    
-            //    try
-            //    {
-
-            //        var employees = await _appDbContext.Employees
-            //            .Include(e => e.Country)
-            //            .Include(e => e.State)
-            //            .Include(e => e.City)
-            //            .ToListAsync();
-            //        if (employees == null || employees.Count <= 0)
-            //        {
-            //            return new List<GetEmployeeDto>();
-            //        }
-
-            //        newEmp = employees.Select(e => new GetEmployeeDto
-            //        {
-            //            EmployeeCode = e.EmployeeCode,
-            //            FirstName = e.FirstName,
-            //            LastName = e.LastName,
-            //            CountryName = e.Country?.CountryName,
-            //            StateName = e.State?.Name,
-            //            CityName = e.City?.Name,
-            //            EmailAddress = e.EmailAddress,
-            //            MobileNumber = e.MobileNumber,
-            //            PanNumber = e.PanNumber,
-            //            PassportNumber = e.PassportNumber,
-            //            ProfileImage = e.ProfileImage,
-            //            Gender = e.Gender,
-            //            DateOfBirth = e.DateOfBirth,
-            //            DateOfJoinee = e.DateOfJoinee,
-            //            CreatedDate = e.CreatedDate,
-            //            UpdatedDate = e.UpdatedDate
-            //        }).ToList();
-
-
+            var newEmp = new List<GetEmployeeDto>();           
             try
             {
                      newEmp = new List<GetEmployeeDto>

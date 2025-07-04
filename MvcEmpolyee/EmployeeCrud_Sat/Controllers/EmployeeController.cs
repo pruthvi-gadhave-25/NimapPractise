@@ -19,9 +19,8 @@ namespace EmployeeCrud_Sat.Controllers
         {
             try
             {
-                var res = await _employeeService.GetAllEmployees();
-
-                return View("Index", res);
+                var res = await _employeeService.GetAllEmployees();                
+                return View(res);
             }
             catch(Exception ex)
             {   
@@ -55,20 +54,29 @@ namespace EmployeeCrud_Sat.Controllers
             return View("AddEmployee");
         }
 
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    var emp = await _employeeService.GetEmployeeByIdAsync(id);
-        //    if (emp == null) return NotFound();
+        public async Task<IActionResult> Edit(int id)
+        {
+            //var emp = await _employeeService.GetEmployeeByIdAsync(id);
+            //if (emp == null) return NotFound();
 
-        //    //var dto = new UpdateEmployeeDto
-        //    //{
-        //    //    Id = emp.Id,
-        //    //    Name = emp.Name,
-        //    //    Email = emp.Email,
-        //    //    Position = emp.Position
-        //    //};
-        //    return View("EditEmployee", dto);
-        //}
+            ////var dto = new UpdateEmployeeDto
+            ////{
+            ////    Id = emp.Id,
+            ////    Name = emp.Name,
+            ////    Email = emp.Email,
+            ////    Position = emp.Position
+            ////};
+            //return View("EditEmployee", dto);
+            return RedirectToAction("Index");
+        }
+      
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            // delete logic
+            return RedirectToAction("Index");
+        }
 
     }
 }
