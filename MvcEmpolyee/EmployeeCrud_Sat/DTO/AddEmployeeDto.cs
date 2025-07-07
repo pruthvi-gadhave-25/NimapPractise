@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeCrud_Sat.DTO
 {
@@ -64,5 +65,8 @@ namespace EmployeeCrud_Sat.DTO
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedDate { get; set; }
+        public IEnumerable<SelectListItem> Countries { get; set; }
+        public IEnumerable<SelectListItem> States { get; set; }
+        public IEnumerable<SelectListItem> Cities { get; set; }
     }
 }

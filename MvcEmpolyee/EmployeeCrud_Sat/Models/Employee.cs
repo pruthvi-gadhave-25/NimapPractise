@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using EmployeeCrud_Sat.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeCrud_Sat.Models
 {
@@ -71,5 +74,9 @@ namespace EmployeeCrud_Sat.Models
         public Country? Country { get; set; }
         public State? State { get; set; }
         public City? City { get; set; }
+
+        public IEnumerable<SelectListItem> Countries { get; set; } 
+        public IEnumerable<SelectListItem> States { get; set; } 
+        public IEnumerable<SelectListItem> Cities { get; set; } 
     }
 }
