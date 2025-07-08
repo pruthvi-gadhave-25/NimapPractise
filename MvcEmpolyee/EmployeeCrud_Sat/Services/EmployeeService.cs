@@ -16,29 +16,58 @@ namespace EmployeeCrud_Sat.Services
             _appDbContext = context;
         }
 
+         private async  Task<string> GetRandId()
+        {
+            string str = "";
+            Random rand = new Random();
+
+            int randValue = rand.Next(0, 26);
+
+            // Generating random character by converting
+            // the random number into character.
+            char letter = Convert.ToChar(randValue + 65);
+
+            // Appending the letter to string.
+            str = str + letter;
+
+            return str;
+        }
 
         public async Task<AddEmployeeDto> AddEmployeeAsync(AddEmployeeDto employee)
         {
 
             var emp = new Employee
             {
-                EmployeeCode = employee.EmployeeCode,
+                EmployeeCode = await GetRandId(),
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                //CountryName = employee.CountryId,
-                //StateName = employee.State?.Name,
-                //CityName = employee.City?.Name,
+                CountryId = employee.CountryId,
+                StateId = employee.StateId,
+                CityId = employee.CountryId,
                 EmailAddress = employee.EmailAddress,
                 MobileNumber = employee.MobileNumber,
                 PanNumber = employee.PanNumber,
                 PassportNumber = employee.PassportNumber,
-                ProfileImage = employee.ProfileImage,
                 Gender = employee.Gender,
                 DateOfBirth = employee.DateOfBirth,
                 DateOfJoinee = employee.DateOfJoinee,
-                CreatedDate = employee.CreatedDate,
-                UpdatedDate = employee.UpdatedDate
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                IsActive =false 
             };
+
+            if(employee.ProfileImage != null  && employee.ProfileImage.Length > 0)
+            {
+                string fileName = new Guid() + Path.GetExtension(employee.ProfileImage.FileName);
+
+                string path = Path.Combine("www/uploads/", fileName);
+                using(  var stream  =  new FileStream(path, FileMode.Create))
+                {
+                    await employee.ProfileImage.CopyToAsync(stream);
+
+                }
+                emp.ProfileImage = fileName;
+            }
             var result = _appDbContext.Employees.Add(emp);
             await _appDbContext.SaveChangesAsync();
             if (result != null)

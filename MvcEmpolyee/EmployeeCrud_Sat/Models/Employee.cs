@@ -65,9 +65,6 @@ namespace EmployeeCrud_Sat.Models
 
         public DateTime? UpdatedDate { get; set; }
 
-        [Required]
-        public bool IsDeleted { get; set; }
-
         public DateTime? DeletedDate { get; set; }
 
         // Navigation Properties

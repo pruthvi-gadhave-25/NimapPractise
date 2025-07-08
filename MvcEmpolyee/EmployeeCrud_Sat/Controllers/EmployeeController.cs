@@ -32,55 +32,6 @@ namespace EmployeeCrud_Sat.Controllers
             }
         }
 
-        [HttpPost("add/employee")]
-        public async Task<IActionResult> Add(AddEmployeeDto employeeDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                var countries = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "India" },
-                new SelectListItem { Value = "2", Text = "France" },
-                new SelectListItem { Value = "3", Text = "Spain" }
-            };
-                var states = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Delhi" },
-                new SelectListItem { Value = "2", Text = "Paris" },
-                new SelectListItem { Value = "3", Text = "Madrid" }
-            };
-
-            var cities = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "New Delhi" },
-                new SelectListItem { Value = "2", Text = "Nice" },
-                new SelectListItem { Value = "3", Text = "Barcelona" }
-            };
-
-                employeeDto.Countries = countries;  
-                employeeDto.Cities = cities;
-                employeeDto.States = states;
-                //return View("AddEmployee", employee); 
-                return View(employeeDto); 
-            }
-            var employee = new Employee
-            {
-                FirstName = employeeDto.FirstName,
-                MobileNumber = employeeDto.MobileNumber,
-                CountryId = employeeDto.CountryId,
-                StateId = employeeDto.StateId
-            };
-            var res = await _employeeService.AddEmployeeAsync(employeeDto);
-
-            if (res == null)
-            {
-                return View("NotFoundData"); 
-            }
-
-            return RedirectToAction("Index"); 
-        }
-
-
         [HttpGet]
         public async Task<IActionResult> GetAddEmployee()
         {
@@ -97,7 +48,7 @@ namespace EmployeeCrud_Sat.Controllers
                 new SelectListItem { Value = "3", Text = "Madrid" }
             };
 
-              var cities = new List<SelectListItem>
+            var cities = new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "New Delhi" },
                 new SelectListItem { Value = "2", Text = "Nice" },
@@ -107,15 +58,57 @@ namespace EmployeeCrud_Sat.Controllers
             var model = new AddEmployeeDto
             {
                 Countries = countries,
-                States = states ,
+                States = states,
                 Cities = cities
             };
 
-            //ViewBag.countries = countries;  
-            //ViewBag. = countries;  
-            //ViewBag.countries = countries;  
-            return View("AddEmployeeForm" ,model);
+            return View("AddEmployeeForm", model);
         }
+
+        [HttpPost("add/employee")]
+        public async Task<IActionResult> Add(AddEmployeeDto employeeDto)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    var countries = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "1", Text = "India" },
+            //    new SelectListItem { Value = "2", Text = "France" },
+            //    new SelectListItem { Value = "3", Text = "Spain" }
+            //};
+            //    var states = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "1", Text = "Delhi" },
+            //    new SelectListItem { Value = "2", Text = "Paris" },
+            //    new SelectListItem { Value = "3", Text = "Madrid" }
+            //};
+
+            //    var cities = new List<SelectListItem>
+            //    {
+            //        new SelectListItem { Value = "1", Text = "New Delhi" },
+            //        new SelectListItem { Value = "2", Text = "Nice" },
+            //        new SelectListItem { Value = "3", Text = "Barcelona" }
+            //    };
+
+            //    employeeDto.Countries = countries;  
+            //    employeeDto.Cities = cities;
+            //    employeeDto.States = states;
+            //    //return View("AddEmployee", employee); 
+            //    return View(employeeDto); 
+            //}
+           
+            var res = await _employeeService.AddEmployeeAsync(employeeDto);
+
+            if (res == null)
+            {
+                return View("NotFoundData"); 
+            }
+
+            return RedirectToAction("Index"); 
+        }
+
+
+        
 
         public async Task<IActionResult> Edit(int id)
         {

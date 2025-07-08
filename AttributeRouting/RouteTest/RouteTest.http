@@ -1,0 +1,6 @@
+@RouteTest_HostAddress = http://localhost:5036
+
+GET {{RouteTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

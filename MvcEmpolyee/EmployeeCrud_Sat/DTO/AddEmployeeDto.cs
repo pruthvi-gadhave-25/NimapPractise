@@ -6,9 +6,9 @@ namespace EmployeeCrud_Sat.DTO
 {
     public class AddEmployeeDto
     {
-        [Required]
-        [MaxLength(8)]
-        public string EmployeeCode { get; set; } //this should be uniq autgernerated   e.g., 001
+        //[Required]
+        //[MaxLength(8)]
+        //public string EmployeeCode { get; set; } //this should be uniq autgernerated   e.g., 001
 
         [Required]
         [MaxLength(50)]
@@ -17,13 +17,12 @@ namespace EmployeeCrud_Sat.DTO
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        [ForeignKey("Country")]
+
         public int CountryId { get; set; }
 
-        [ForeignKey("State")]
+    
         public int StateId { get; set; }
-
-        [ForeignKey("City")]
+        
         public int CityId { get; set; }
 
         [Required]
@@ -43,28 +42,27 @@ namespace EmployeeCrud_Sat.DTO
         [MaxLength(20)]
         public string PassportNumber { get; set; }
 
-        [MaxLength(100)]
-        public string ProfileImage { get; set; }
 
         public byte Gender { get; set; }
 
-        [Required]
-        public bool IsActive { get; set; }
+  
 
         [Required]
         public DateTime DateOfBirth { get; set; }
 
         public DateTime? DateOfJoinee { get; set; }
+        public IFormFile ProfileImage { get; set; }
 
-        [Required]
-        public DateTime CreatedDate { get; set; }
+        //[Required]
+        //public DateTime CreatedDate { get; set; }
 
-        public DateTime? UpdatedDate { get; set; }
+        //public DateTime? UpdatedDate { get; set; }
 
-        [Required]
-        public bool IsDeleted { get; set; }
+        //[Required]
+        //public bool IsDeleted { get; set; }
 
-        public DateTime? DeletedDate { get; set; }
+        //public DateTime? DeletedDate { get; set; }
+
         public IEnumerable<SelectListItem> Countries { get; set; }
         public IEnumerable<SelectListItem> States { get; set; }
         public IEnumerable<SelectListItem> Cities { get; set; }
