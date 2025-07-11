@@ -3,9 +3,9 @@ using EmployeeCrud_Sat.Models;
 
 namespace EmployeeCrud_Sat.Services.Interface
 {
-    public interface IStateService
+    public interface ICityService
     {
-        Task<List<State>> GetAllStates();
-        Task<bool> AddState(StateDto state );
+        Task<List<City>> GetAllCities();
+        Task<bool>  AddCity(CityDto city);
     }
 }

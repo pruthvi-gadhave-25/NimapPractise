@@ -6,6 +6,6 @@
         public string CountryName { get; set; }
 
         public List<State>? States { get; set; }
-        public List<Employee>? employees { get; set; } = new List<Employee>();
+        public List<Employee>? Employees { get; set; } = new List<Employee>();
     }
 }

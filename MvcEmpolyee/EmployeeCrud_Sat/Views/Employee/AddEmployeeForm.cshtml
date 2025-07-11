@@ -7,13 +7,13 @@
 @model AddEmployeeDto
 <h2>Add New Employee</h2>
 
-<form asp-action="Add" method="post" class="row g-3 border-1 border-dark p-2 ">
+<form asp-action="Add" method="post" enctype="multipart/form-data" class="row g-3 border-1 border-dark p-2 ">
    @*  <div class="col-md-3">
         <label asp-for="EmployeeCode" class="form-label"></label>
         <input asp-for="EmployeeCode" class="form-control"/>
         <span asp-validation-for="EmployeeCode" class="text-danger"></span>
     </div> *@
-
+   
     <div class="col-md-3">
         <label asp-for="FirstName" class="form-label"></label>
         <input asp-for="FirstName" class="form-control" />

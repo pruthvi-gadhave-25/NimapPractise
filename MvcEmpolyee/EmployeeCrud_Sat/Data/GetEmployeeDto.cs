@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 namespace EmployeeCrud_Sat.Data
 {
     public class GetEmployeeDto
-    {
+    {   
+        public int Id { get; set; } 
         public string EmployeeCode { get; set; } //this should be uniq autgernerated   e.g., 001
         
         public string FirstName { get; set; }
        
         public string LastName { get; set; }       
-        public string CountryName { get; set; }
+        public string? CountryName { get; set; }
      
         public string StateName { get; set; }
 
@@ -32,17 +33,13 @@ namespace EmployeeCrud_Sat.Data
        
         public string ProfileImage { get; set; }
 
-        public byte Gender { get; set; }
+        public string Gender { get; set; }
 
 
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
 
-        public DateTime? DateOfJoinee { get; set; }
-
-        
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
+        public string? DateOfJoinee { get; set; }
+   
 
     }
 }

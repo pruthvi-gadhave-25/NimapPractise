@@ -11,21 +11,27 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Position</th>
+            <th>Gender</th>
+            <th>DateOfBirth</th>
+            <th>DateOfJoinee</th>
             <th>Actions</th>
+            <th>IdEmp</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var e in Model)
         {
             <tr class="border">
-                <td>@e.FirstName </td>
-                <td>@e.LastName </td>
+                <td>@e.FirstName @e.LastName </td>              
                 <td>@e.EmailAddress</td>
+                <td>@e.Gender</td>
+                <td>@e.DateOfBirth</td>
+                <td>@e.DateOfJoinee</td>
+                <td>@e.Id</td>
                
                 <td>
-                    <a href="@Url.Action("Edit", new { id = e.EmployeeCode })" class="btn btn-warning btn-sm">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@e.EmployeeCode" method="post" style="display:inline">
+                    <a href="@Url.Action("EditEmployee", new { id = e.Id })" class="btn btn-warning btn-sm">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@e.Id"  method  ="post" style="display:inline">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>

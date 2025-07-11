@@ -1,30 +1,97 @@
-﻿@using EmployeeCrud_Sat.DTO
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model UpdateEmployeeDto
+﻿@model EmployeeCrud_Sat.DTO.AddEmployeeDto
 
-<h2>Edit Employee</h2>
+<form asp-action="Edit" method="post" enctype="multipart/form-data" class="row g-3 border-1 border-dark p-2">
 
-<form asp-action="Edit" method="post">
-    @Html.AntiForgeryToken()
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+    <!-- Hidden ID Field (needed to identify which record to update) --> 
+    <div class="col-md-3">
+        <label asp-for="FirstName" class="form-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+
+    <div class="col-md-3">
+        <label asp-for="LastName" class="form-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
-   @*  <div class="form-group">
-        <label asp-for="Position"></label>
-        <input asp-for="Position" class="form-control" />
-        <span asp-validation-for="Position" class="text-danger"></span>
-    </div> *@
-    <button type="submit" class="btn btn-primary">Update</button>
+
+    <div class="col-md-3">
+        <label asp-for="EmailAddress" class="form-label"></label>
+        <input asp-for="EmailAddress" class="form-control" />
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="MobileNumber" class="form-label"></label>
+        <input asp-for="MobileNumber" class="form-control" />
+        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="PanNumber" class="form-label"></label>
+        <input asp-for="PanNumber" class="form-control" />
+        <span asp-validation-for="PanNumber" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="PassportNumber" class="form-label"></label>
+        <input asp-for="PassportNumber" class="form-control" />
+        <span asp-validation-for="PassportNumber" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="CountryId" class="form-label">Country</label>
+        <select asp-for="CountryId" class="form-control" asp-items="Model.Countries">
+            <option value="">-- Select Country --</option>
+        </select>
+        <span asp-validation-for="CountryId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="StateId" class="form-label">State</label>
+        <select asp-for="StateId" class="form-control" asp-items="Model.States">
+            <option value="">-- Select State --</option>
+        </select>
+        <span asp-validation-for="StateId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="CityId" class="form-label">City</label>
+        <select asp-for="CityId" class="form-control" asp-items="Model.Cities">
+            <option value="">-- Select City --</option>
+        </select>
+        <span asp-validation-for="CityId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Gender" class="form-label"></label>
+        <select asp-for="Gender" class="form-control">
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="DateOfBirth" class="form-label"></label>
+        <input asp-for="DateOfBirth" type="date" class="form-control" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="DateOfJoinee" class="form-label"></label>
+        <input asp-for="DateOfJoinee" type="date" class="form-control" />
+        <span asp-validation-for="DateOfJoinee" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="ProfileImage" class="form-label"></label>
+        <input asp-for="ProfileImage" class="form-control" type="file" />
+        <span asp-validation-for="ProfileImage" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-12 mt-3">
+        <input type="submit" value="Update" class="btn btn-success me-2" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
 </form>

@@ -10,13 +10,15 @@ namespace EmployeeCrud_Sat.Services
     {
 
         private readonly AppDbContext _appDbContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EmployeeService(AppDbContext context)
+        public EmployeeService(AppDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _appDbContext = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-         private async  Task<string> GetRandId()
+        private async  Task<string> GetRandId()
         {
             string str = "";
             Random rand = new Random();
@@ -58,15 +60,21 @@ namespace EmployeeCrud_Sat.Services
 
             if(employee.ProfileImage != null  && employee.ProfileImage.Length > 0)
             {
-                string fileName = new Guid() + Path.GetExtension(employee.ProfileImage.FileName);
+                
+                string path = Path.Combine(_webHostEnvironment.WebRootPath ,  "uploads" ,"employee-images");
+                Directory.CreateDirectory(path);
 
-                string path = Path.Combine("www/uploads/", fileName);
-                using(  var stream  =  new FileStream(path, FileMode.Create))
+                string fileName = new Guid() + Path.GetExtension(employee.ProfileImage.FileName);
+                string filepaht = Path.Combine(path, fileName);
+
+                using (  var stream  =  new FileStream(filepaht, FileMode.Create))
                 {
                     await employee.ProfileImage.CopyToAsync(stream);
 
                 }
-                emp.ProfileImage = fileName;
+
+                // Store relative path in DB (so you can use it in <img>)
+                emp.ProfileImage = Path.Combine("uploads/employee-images", fileName).Replace("\\", "/");
             }
             var result = _appDbContext.Employees.Add(emp);
             await _appDbContext.SaveChangesAsync();
@@ -92,92 +100,57 @@ namespace EmployeeCrud_Sat.Services
 
         public async Task<List<GetEmployeeDto>> GetAllEmployees()
         {
-            var newEmp = new List<GetEmployeeDto>();           
+                    
             try
-            {
-                     newEmp = new List<GetEmployeeDto>
+            {             
+                var res = await  _appDbContext.Employees.Select(e => new GetEmployeeDto
                 {
-                     new GetEmployeeDto
-                        {
-                            EmployeeCode = "EMP001",
-                            FirstName = "Alice",
-                            LastName = "Johnson",
-                            CountryName = "USA",
-                            StateName = "California",
-                            CityName = "Los Angeles",
-                            EmailAddress = "alice.johnson@example.com",
-                            MobileNumber = "1234567890",
-                            PanNumber = "PAN1234A",
-                            PassportNumber = "P1234567",
-                            ProfileImage = "alice.jpg",
-                            Gender = 1,
-                            DateOfBirth = new DateTime(1990, 5, 10),
-                            DateOfJoinee = new DateTime(2020, 1, 15),
-                            CreatedDate = DateTime.Now.AddMonths(-6),
-                            UpdatedDate = DateTime.Now.AddDays(-10)
-                        },
-                        new GetEmployeeDto
-                        {
-                            EmployeeCode = "EMP002",
-                            FirstName = "Bob",
-                            LastName = "Smith",
-                            CountryName = "India",
-                            StateName = "Maharashtra",
-                            CityName = "Mumbai",
-                            EmailAddress = "bob.smith@example.com",
-                            MobileNumber = "9876543210",
-                            PanNumber = "PAN5678B",
-                            PassportNumber = "P7654321",
-                            ProfileImage = "bob.jpg",
-                            Gender = 0,
-                            DateOfBirth = new DateTime(1988, 3, 25),
-                            DateOfJoinee = new DateTime(2019, 6, 1),
-                            CreatedDate = DateTime.Now.AddMonths(-12),
-                            UpdatedDate = DateTime.Now.AddDays(-5)
-                        },
-                };
-
-                return newEmp;
+                    Id =  e.EmployeeId,
+                    EmailAddress = e.EmailAddress,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    PanNumber = e.PanNumber,
+                    CountryName = e.Country.CountryName ?? " ",
+                    Gender = e.Gender ==  0 ? "Male" : "Female",
+                    DateOfBirth = e.DateOfBirth.ToString("MM/dd/yyyy") ,
+                    DateOfJoinee = e.DateOfJoinee.HasValue ?  e.DateOfJoinee.Value.ToString("MM/dd/yyyy"): null
+                }).ToListAsync();
+                              
+                return res ?? new List<GetEmployeeDto>();
             }
             catch (Exception ex)
             {
-                return newEmp;
+                return new List<GetEmployeeDto>();
             }
         }
 
         public async Task<GetEmployeeDto> GetEmployeeByIdAsync(int id)
         {
-            var employee = await _appDbContext.Employees
-                 .Include(e => e.Country)
-                .Include(e => e.State)
-                .Include(e => e.City)
-                .FirstOrDefaultAsync(p => p.EmployeeId == id);
+
+            var employee = await _appDbContext.Employees.Select( e => new GetEmployeeDto
+            {   
+                Id =e.EmployeeId,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                CountryName = e.Country.CountryName,
+                StateName = e.State.Name,
+                CityName = e.City.Name,
+                EmailAddress = e.EmailAddress,
+                MobileNumber = e.MobileNumber,
+                PanNumber = e.PanNumber,
+                PassportNumber = e.PassportNumber,
+                ProfileImage = e.ProfileImage,
+                Gender = Convert.ToString(e.Gender),
+                DateOfBirth = e.DateOfBirth.ToString("MM/dd/yyyy"),
+
+            }).FirstOrDefaultAsync(  e => e.Id == id);   
+                
 
             if (employee == null)
             {
                 return null;
-            }
-            var newEmployee = new GetEmployeeDto
-            {
-                EmployeeCode = employee.EmployeeCode,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                CountryName = employee.Country?.CountryName,
-                StateName = employee.State?.Name,
-                CityName = employee.City?.Name,
-                EmailAddress = employee.EmailAddress,
-                MobileNumber = employee.MobileNumber,
-                PanNumber = employee.PanNumber,
-                PassportNumber = employee.PassportNumber,
-                ProfileImage = employee.ProfileImage,
-                Gender = employee.Gender,
-                DateOfBirth = employee.DateOfBirth,
-                DateOfJoinee = employee.DateOfJoinee,
-                CreatedDate = employee.CreatedDate,
-                UpdatedDate = employee.UpdatedDate
-            };
-
-            return newEmployee;
+            }         
+            return employee;
         }
 
         public async Task<bool> UpdateEmployeeAsync(Employee employee)

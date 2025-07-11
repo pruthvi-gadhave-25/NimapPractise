@@ -72,13 +72,7 @@ namespace EmployeeCrud_Sat.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CityId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CountryId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -142,9 +136,6 @@ namespace EmployeeCrud_Sat.Migrations
                     b.Property<int>("StateId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StateId1")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -152,15 +143,9 @@ namespace EmployeeCrud_Sat.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("CityId1");
-
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("CountryId1");
-
                     b.HasIndex("StateId");
-
-                    b.HasIndex("StateId1");
 
                     b.ToTable("Employees");
                 });
@@ -201,34 +186,22 @@ namespace EmployeeCrud_Sat.Migrations
             modelBuilder.Entity("EmployeeCrud_Sat.Models.Employee", b =>
                 {
                     b.HasOne("EmployeeCrud_Sat.Models.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EmployeeCrud_Sat.Models.City", null)
                         .WithMany("Employees")
-                        .HasForeignKey("CityId1");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EmployeeCrud_Sat.Models.Country", "Country")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("EmployeeCrud_Sat.Models.Country", null)
-                        .WithMany("employees")
-                        .HasForeignKey("CountryId1");
 
                     b.HasOne("EmployeeCrud_Sat.Models.State", "State")
-                        .WithMany()
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EmployeeCrud_Sat.Models.State", null)
                         .WithMany("Employees")
-                        .HasForeignKey("StateId1");
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("City");
 
@@ -255,9 +228,9 @@ namespace EmployeeCrud_Sat.Migrations
 
             modelBuilder.Entity("EmployeeCrud_Sat.Models.Country", b =>
                 {
-                    b.Navigation("States");
+                    b.Navigation("Employees");
 
-                    b.Navigation("employees");
+                    b.Navigation("States");
                 });
 
             modelBuilder.Entity("EmployeeCrud_Sat.Models.State", b =>
