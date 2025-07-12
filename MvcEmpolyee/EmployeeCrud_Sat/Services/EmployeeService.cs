@@ -1,8 +1,10 @@
 ﻿using EmployeeCrud_Sat.Data;
 using EmployeeCrud_Sat.DTO;
 using EmployeeCrud_Sat.Models;
+using EmployeeCrud_Sat.Models.ViewModels;
 using EmployeeCrud_Sat.Services.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace EmployeeCrud_Sat.Services
 {
@@ -112,7 +114,7 @@ namespace EmployeeCrud_Sat.Services
                     PanNumber = e.PanNumber,
                     CountryName = e.Country.CountryName ?? " ",
                     Gender = e.Gender ==  0 ? "Male" : "Female",
-                    DateOfBirth = e.DateOfBirth.ToString("MM/dd/yyyy") ,
+                    DateOfBirth = e.DateOfBirth.ToString("MM/dd/yyyy"),
                     DateOfJoinee = e.DateOfJoinee.HasValue ?  e.DateOfJoinee.Value.ToString("MM/dd/yyyy"): null
                 }).ToListAsync();
                               
@@ -130,19 +132,19 @@ namespace EmployeeCrud_Sat.Services
             var employee = await _appDbContext.Employees.Select( e => new GetEmployeeDto
             {   
                 Id =e.EmployeeId,
+                EmployeeCode = e.EmployeeCode,
                 FirstName = e.FirstName,
                 LastName = e.LastName,
-                CountryName = e.Country.CountryName,
-                StateName = e.State.Name,
-                CityName = e.City.Name,
+                CountryId =  e.CountryId,
+                StateId = e.StateId,
+                CityId = e.CityId,
                 EmailAddress = e.EmailAddress,
                 MobileNumber = e.MobileNumber,
                 PanNumber = e.PanNumber,
                 PassportNumber = e.PassportNumber,
                 ProfileImage = e.ProfileImage,
                 Gender = Convert.ToString(e.Gender),
-                DateOfBirth = e.DateOfBirth.ToString("MM/dd/yyyy"),
-
+                DateOfBirth = e.DateOfBirth.ToString("yyyy-MM-dd"),
             }).FirstOrDefaultAsync(  e => e.Id == id);   
                 
 
@@ -153,16 +155,44 @@ namespace EmployeeCrud_Sat.Services
             return employee;
         }
 
-        public async Task<bool> UpdateEmployeeAsync(Employee employee)
+        public async Task<bool> UpdateEmployeeAsync(EditEmployeeDto employeeDto)
         {
 
-            var res = _appDbContext.Employees.Update(employee);
-            await _appDbContext.SaveChangesAsync();
-            if (res == null)
+
+            try
             {
-                return false;
+                var employee = new Employee
+                {
+                    EmployeeId = employeeDto.Id,
+                    EmployeeCode = employeeDto.EmployeeCode,
+                    FirstName = employeeDto.FirstName,
+                    LastName = employeeDto.LastName,
+                    CountryId = employeeDto.CountryId,
+                    StateId = employeeDto.StateId,
+                    CityId = employeeDto.CityId,
+                    EmailAddress = employeeDto.EmailAddress,
+                    MobileNumber = employeeDto.MobileNumber,
+                    PanNumber = employeeDto.PanNumber,
+                    PassportNumber = employeeDto.PassportNumber,
+                    ProfileImage = employeeDto.ProfileImage,
+                    Gender = employeeDto.Gender,
+                    IsActive = true,
+                    DateOfBirth = DateTime.Parse(employeeDto.DateOfBirth),
+                    DateOfJoinee = string.IsNullOrWhiteSpace(employeeDto.DateOfJoinee) ? null : DateTime.Parse(employeeDto.DateOfJoinee),
+                    CreatedDate = DateTime.UtcNow
+                };
+
+                var res = _appDbContext.Employees.Update(employee);
+                await _appDbContext.SaveChangesAsync();
+
+                return res != null;
             }
-            return true;
+            catch (Exception ex)
+            {
+                // Log this or inspect in debugger
+                Console.WriteLine("Exception occurred: " + ex.Message);
+                throw; // or return false, depending on design
+            }
 
         }
     }

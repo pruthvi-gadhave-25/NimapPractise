@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using EmployeeCrud_Sat.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EmployeeCrud_Sat.Models
 {
@@ -48,7 +49,7 @@ namespace EmployeeCrud_Sat.Models
         public string PassportNumber { get; set; }
 
         [MaxLength(100)]
-        public string ProfileImage { get; set; }
+        public string? ProfileImage { get; set; }
 
         public byte Gender { get; set; }
 
@@ -72,8 +73,14 @@ namespace EmployeeCrud_Sat.Models
         public State? State { get; set; }
         public City? City { get; set; }
 
-        public IEnumerable<SelectListItem> Countries { get; set; } 
-        public IEnumerable<SelectListItem> States { get; set; } 
+
+        [BindNever]
+        public IEnumerable<SelectListItem> Countries { get; set; }
+
+        [BindNever]
+        public IEnumerable<SelectListItem> States { get; set; }
+
+        [BindNever]
         public IEnumerable<SelectListItem> Cities { get; set; } 
     }
 }

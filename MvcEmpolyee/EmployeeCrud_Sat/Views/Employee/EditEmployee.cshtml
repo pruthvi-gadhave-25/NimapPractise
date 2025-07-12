@@ -1,8 +1,14 @@
-﻿@model EmployeeCrud_Sat.DTO.AddEmployeeDto
+﻿@model EmployeeCrud_Sat.Models.ViewModels.EditEmployeeDto
+    
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data" class="row g-3 border-1 border-dark p-2">
+
+<p><strong>Employee Code:</strong> @Model.EmployeeCode</p>
+<form asp-action="UpdateEmployee" method="post" enctype="multipart/form-data" class="row g-3 border-1 border-dark p-2">
 
     <!-- Hidden ID Field (needed to identify which record to update) --> 
+     <input type="hidden" asp-for="EmployeeCode" />
+     
+
     <div class="col-md-3">
         <label asp-for="FirstName" class="form-label"></label>
         <input asp-for="FirstName" class="form-control" />
@@ -79,13 +85,18 @@
     </div>
 
     <div class="col-md-3">
-        <label asp-for="DateOfJoinee" class="form-label"></label>
-        <input asp-for="DateOfJoinee" type="date" class="form-control" />
-        <span asp-validation-for="DateOfJoinee" class="text-danger"></span>
-    </div>
-
-    <div class="col-md-3">
         <label asp-for="ProfileImage" class="form-label"></label>
+
+        @* Show current image *@
+        @if (!string.IsNullOrEmpty(Model.ProfileImage))
+        {
+            <div class="mb-2">
+                <img src="~/uploads/employee-images/" alt="Profile Image"
+                     style="max-width: 100%; height: auto; border-radius: 6px;" />
+            </div>
+        }
+
+        @* Upload new file *@
         <input asp-for="ProfileImage" class="form-control" type="file" />
         <span asp-validation-for="ProfileImage" class="text-danger"></span>
     </div>

@@ -76,11 +76,11 @@ namespace EmployeeCrud_Sat.Controllers
             if (!ModelState.IsValid)
             {
                 var errors = ModelState
-         .Where(x => x.Value.Errors.Count > 0)
-         .Select(x => new {
-             Field = x.Key,
-             Errors = x.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-         }).ToList();
+                     .Where(x => x.Value.Errors.Count > 0)
+                     .Select(x => new {
+                         Field = x.Key,
+                         Errors = x.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                     }).ToList();
 
 
                 Console.WriteLine(employeeDto);
@@ -102,12 +102,113 @@ namespace EmployeeCrud_Sat.Controllers
 
         public async Task<IActionResult> EditEmployee(int id)
         {
+
+            var countries = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "India" },
+                new SelectListItem { Value = "2", Text = "France" },
+                new SelectListItem { Value = "3", Text = "Spain" }
+            };
+            var states = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Delhi" },
+                new SelectListItem { Value = "2", Text = "Paris" },
+                new SelectListItem { Value = "3", Text = "Madrid" }
+            };
+
+            var cities = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "New Delhi" },
+                new SelectListItem { Value = "2", Text = "Nice" },
+                new SelectListItem { Value = "3", Text = "Barcelona" }
+            };
+
             var emp = await _employeeService.GetEmployeeByIdAsync(id);
-                
+
+            var editDtp = new EditEmployeeDto
+            {
+                Id = emp.Id,
+                EmployeeCode = emp.EmployeeCode,
+                FirstName = emp.FirstName,
+                LastName = emp.LastName,
+                CountryId = emp.CountryId,
+                StateId = emp.StateId,
+                CityId = emp.CityId,
+                EmailAddress = emp.EmailAddress,
+                MobileNumber = emp.MobileNumber,
+                PanNumber = emp.PanNumber,
+                PassportNumber = emp.PassportNumber,
+                ProfileImage = emp.ProfileImage,
+                Gender = (byte)(emp.Gender == "Male"  ? 1  : 0) ,
+                DateOfBirth = emp.DateOfBirth,
+                DateOfJoinee = emp.DateOfJoinee,
+                Countries = countries,
+                States = states,
+                Cities = cities,                
+            };
+            ViewData["EmployeeCode"] = emp.EmployeeCode;
 
             if (emp == null) return NotFound();
            
-            return View("EditEmployee", emp);
+            return View("EditEmployee", editDtp);
+
+            //return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEmployee(EditEmployeeDto employeeDto)
+        {
+
+            ModelState.Remove("States");
+            ModelState.Remove("Countries");
+            ModelState.Remove("Cities");
+
+            var countries = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "India" },
+                new SelectListItem { Value = "2", Text = "France" },
+                new SelectListItem { Value = "3", Text = "Spain" }
+            };
+            var states = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Delhi" },
+                new SelectListItem { Value = "2", Text = "Paris" },
+                new SelectListItem { Value = "3", Text = "Madrid" }
+            };
+
+            var cities = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "New Delhi" },
+                new SelectListItem { Value = "2", Text = "Nice" },
+                new SelectListItem { Value = "3", Text = "Barcelona" }
+            };
+
+            employeeDto.CityName = cities.FirstOrDefault(v => v.Value == employeeDto.CityId.ToString())?.Text;
+            employeeDto.StateName = states.FirstOrDefault(v => v.Value == employeeDto.StateId.ToString())?.Text;
+            employeeDto.CountryName = countries.FirstOrDefault(v => v.Value == employeeDto.CountryId.ToString())?.Text;
+           
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                     .Where(x => x.Value.Errors.Count > 0)
+                     .Select(x => new {
+                         Field = x.Key,
+                         Errors = x.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                     }).ToList();
+
+
+                Console.WriteLine(employeeDto);
+                return BadRequest();
+            }
+
+            var res = await _employeeService.UpdateEmployeeAsync(employeeDto);
+
+            if (res == null)
+            {
+                return View("NotFoundData");
+            }
+
             return RedirectToAction("Index");
         }
       
