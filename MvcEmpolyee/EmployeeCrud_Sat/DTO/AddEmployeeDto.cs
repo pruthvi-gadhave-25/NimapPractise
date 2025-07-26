@@ -8,7 +8,7 @@ namespace EmployeeCrud_Sat.DTO
     public class AddEmployeeDto
     {       
 
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
         [Required]  
         [MaxLength(50)]
         public string FirstName { get; set; }

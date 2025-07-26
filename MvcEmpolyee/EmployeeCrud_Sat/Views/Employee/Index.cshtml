@@ -15,7 +15,6 @@
             <th>DateOfBirth</th>
             <th>DateOfJoinee</th>
             <th>Actions</th>
-            <th>IdEmp</th>
         </tr>
     </thead>
     <tbody>
@@ -27,13 +26,13 @@
                 <td>@e.Gender</td>
                 <td>@e.DateOfBirth</td>
                 <td>@e.DateOfJoinee</td>
-                <td>@e.Id</td>
                
                 <td>
-                    <a href="@Url.Action("EditEmployee", new { id = e.Id })" class="btn btn-warning btn-sm">Edit</a>
-                    <form asp-action="Delete" asp-route-id="@e.Id"  method  ="post" style="display:inline">
+                    <a href="@Url.Action("EditEmployee", new { id = e.EmployeeId })" class="btn btn-warning btn-sm">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@e.EmployeeId"  method  ="post" style="display:inline">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+
+                     <a href="@Url.Action("Delete", new { id = e.EmployeeId })" class="btn btn-sm btn-danger">Delete</a>
                     </form>
                 </td> 
             </tr>

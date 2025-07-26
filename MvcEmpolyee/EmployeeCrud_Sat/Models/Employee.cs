@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace EmployeeCrud_Sat.Models
 {
     public class Employee
-    {        
+    {           
         public int EmployeeId { get; set; }
 
         [Required]
@@ -75,12 +75,15 @@ namespace EmployeeCrud_Sat.Models
 
 
         [BindNever]
+        [NotMapped]
         public IEnumerable<SelectListItem> Countries { get; set; }
 
         [BindNever]
+        [NotMapped]
         public IEnumerable<SelectListItem> States { get; set; }
 
         [BindNever]
+        [NotMapped]
         public IEnumerable<SelectListItem> Cities { get; set; } 
     }
 }

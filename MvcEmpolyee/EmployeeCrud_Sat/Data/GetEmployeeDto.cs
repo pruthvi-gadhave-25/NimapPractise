@@ -5,7 +5,7 @@ namespace EmployeeCrud_Sat.Data
 {
     public class GetEmployeeDto
     {   
-        public int Id { get; set; } 
+        public int EmployeeId { get; set; } 
         public string EmployeeCode { get; set; } //this should be uniq autgernerated   e.g., 001
         
         public string FirstName { get; set; }
@@ -40,6 +40,7 @@ namespace EmployeeCrud_Sat.Data
         public string DateOfBirth { get; set; }
 
         public string? DateOfJoinee { get; set; }
+        public bool? IsActive { get; set; }
    
 
     }

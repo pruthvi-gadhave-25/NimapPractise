@@ -5,8 +5,10 @@
 <p><strong>Employee Code:</strong> @Model.EmployeeCode</p>
 <form asp-action="UpdateEmployee" method="post" enctype="multipart/form-data" class="row g-3 border-1 border-dark p-2">
 
-    <!-- Hidden ID Field (needed to identify which record to update) --> 
-     <input type="hidden" asp-for="EmployeeCode" />
+    <!-- Hidden ID Field (needed to identify which record to update) -->
+    <input type="hidden" asp-for="EmployeeId" />
+    <input type="hidden" asp-for="EmployeeCode" />
+    <input type="hidden" asp-for="DateOfJoinee" />
      
 
     <div class="col-md-3">
@@ -91,8 +93,8 @@
         @if (!string.IsNullOrEmpty(Model.ProfileImage))
         {
             <div class="mb-2">
-                <img src="~/uploads/employee-images/" alt="Profile Image"
-                     style="max-width: 100%; height: auto; border-radius: 6px;" />
+                <img src="@Url.Content("~/" + Model.ProfileImage)" alt="Profile Image"
+                     style="max-width: 27%; height: auto; border-radius: 6px;" />
             </div>
         }
 
