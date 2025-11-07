@@ -1,0 +1,60 @@
+//new add document
+        private static string AddDocument(int companyId, int userId, int id ,string moduleName, string category ,string webFilePath, HttpPostedFile httpPostedFile)
+        {
+            var safeFileName = Path.GetFileName(httpPostedFile.FileName);
+            var rootPath = HostingEnvironment.MapPath(webFilePath);
+            var documentFolderPath = Path.Combine(rootPath, Convert.ToString(companyId), Convert.ToString(userId), moduleName, category, Convert.ToString(id));
+            var fullFilePath = Path.Combine(documentFolderPath, safeFileName);
+
+            if (!Directory.Exists(documentFolderPath))
+            {
+                Directory.CreateDirectory(documentFolderPath);
+            }
+
+            httpPostedFile.SaveAs(fullFilePath);
+            
+            var finalWebPath = Path.Combine( webFilePath, Convert.ToString(companyId), Convert.ToString(userId), moduleName,category, Convert.ToString(id), safeFileName).Replace("\\", "/");
+            return finalWebPath;
+        }
+
+        //new upload multimedia 
+        public static string UploadMultimedia(int companyId, int userId, int id, HttpPostedFile item, string extension, string moduleName)
+        {
+            string category;
+            switch (extension)
+            {
+                case ".jpeg":
+                case ".jpg":
+                case ".png":
+                    category = "Images";                    
+                    break;
+                // comapanyId/userId/moduleName/webFilePath/reqId/item/
+
+                case ".mp3":
+                case ".wav":
+                case ".flac":
+                case ".aac":
+                case ".m4a":
+                case ".ogg":
+                    category = "Audio";                    
+                    break;
+
+                case ".mp4":
+                case ".mov":
+                case ".avi":
+                case ".wmv":
+                case ".flv":
+                case ".mkv":
+                case ".webm":
+                case ".mpeg":
+                case ".mpg":
+                case ".3gp":
+                    category = "Video";                    
+                    break;
+
+                default:
+                    category = "Documents";                  
+                    break;
+            }
+            return AddDocument(companyId, userId, id, moduleName,category, "/API/", item); 
+        }
